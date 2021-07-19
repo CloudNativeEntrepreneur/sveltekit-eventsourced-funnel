@@ -14,5 +14,5 @@ const submit = async () => {
 
 <ul>
   <li>Email: {email}</li>
-  <li>Card #: {creditCard}</li>
+  {#if creditCard}<li>Card #: {creditCard}</li>{/if}
 </ul>

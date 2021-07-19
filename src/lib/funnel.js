@@ -32,6 +32,9 @@ funnel.addStep({
   action: (data) => new Promise((resolve, reject) => {
     const { downsell } = data
     funnel.downsell = downsell
+
+    // skip checkout if they didnt buy
+    if (! funnel.downsell) funnel.skipNextStep = true
     resolve(funnel)
   })
 })

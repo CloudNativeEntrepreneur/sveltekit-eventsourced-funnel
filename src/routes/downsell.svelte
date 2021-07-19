@@ -3,8 +3,11 @@ import { funnel } from '$lib/funnel'
 let email = funnel.user.email
 funnel.enter()
 
-const downsell = async () => {
+const yes = async () => {
   await funnel.completeStep({ downsell: true })
+}
+const no = async () => {
+  await funnel.completeStep({ downsell: false })
 }
 </script>
 
@@ -22,10 +25,10 @@ const downsell = async () => {
 
 <p>How about this instead?</p>
 
-<button class="yes" on:click|preventDefault={downsell}>
-  Buy DevOps Bliss
+<button class="yes" on:click|preventDefault={yes}>
+  Ok, Let's do that!
 </button>
 
-<button>
-  No thanks
+<button class="no" on:click|preventDefault={no}>
+  Still, No thanks
 </button>

@@ -15,7 +15,7 @@ export class Funnel extends Aggregate {
     this.downsell = false
     this.lastCompletedStep = 0
     this.currentStep = 0
-    this.nextStep = null
+    this.nextStep = 0
   }
 
   addStep (step) {
@@ -46,7 +46,7 @@ export class Funnel extends Aggregate {
   }
 
   enter () {
-    this.currentStep = this.nextStep || 0
+    this.currentStep = this.nextStep
     this.session = uuid()
     this.digest('enter')
     this.emit('entered', this)
