@@ -11,7 +11,7 @@ const log = debug('event-sourcing')
  * @param {String} msg The error message.
  */
 class AggregateError extends Error {
-  constructor (...args) {
+  constructor(...args) {
     super(...args)
     log('Aggregate Error: ', this)
     Error.captureStackTrace(this, AggregateError)
@@ -32,7 +32,7 @@ class AggregateError extends Error {
  */
 
 export class Aggregate extends EventEmitter {
-  constructor () {
+  constructor() {
     super()
 
     /**
@@ -77,7 +77,7 @@ export class Aggregate extends EventEmitter {
   /**
    * Rehydrates by merging a snapshot, and replaying events on top.
    */
-  rehydrate (snapshot, events) {
+  rehydrate(snapshot, events) {
     log('rehydrating', this)
     /**
      * If a snapshot is provided, merge it.
@@ -98,7 +98,7 @@ export class Aggregate extends EventEmitter {
    * Wrapper around the EventEmitter.emit method that adds a condition so events
    * are not fired during replay.
    */
-  emit () {
+  emit() {
     if (!this.replaying) {
       EventEmitter.prototype.emit.apply(this, arguments)
     }
@@ -108,7 +108,7 @@ export class Aggregate extends EventEmitter {
    * Add events to the queue of events to emit. If called during replay, this
    * method does nothing.
    */
-  enqueue () {
+  enqueue() {
     if (!this.replaying) {
       this.eventsToEmit.push(arguments)
     }
@@ -122,7 +122,7 @@ export class Aggregate extends EventEmitter {
    * @param  {String} method  the name of the method/command you want to digest.
    * @param  {Object} data    the data that should be passed to the replay.
    */
-  digest (method, data) {
+  digest(method, data) {
     if (!this.replaying) {
       this.timestamp = Date.now()
       this.version = this.version + 1
@@ -145,7 +145,7 @@ export class Aggregate extends EventEmitter {
    * @param  {Object} snapshot  snapshot object.
    * @see Aggregate.mergeProperty
    */
-  merge (snapshot) {
+  merge(snapshot) {
     log('merging snapshot', { snapshot })
     for (const property in snapshot) {
       const val = cloneDeep(snapshot[property])
@@ -168,13 +168,12 @@ export class Aggregate extends EventEmitter {
    * @see mergeProperties
    * @see Aggregate.mergeProperty
    */
-  mergeProperty (name, value) {
+  mergeProperty(name, value) {
     if (typeof value === 'object' && typeof this[name] === 'object') {
       Object.assign(this, {
         [name]: value
       })
-    }
-    else {
+    } else {
       this[name] = value
     }
   }
@@ -193,7 +192,7 @@ export class Aggregate extends EventEmitter {
    *
    * @param  {Array} events  an array of events to be replayed.
    */
-  replay (events) {
+  replay(events) {
     const self = this
 
     this.replaying = true
@@ -205,10 +204,17 @@ export class Aggregate extends EventEmitter {
         self[event.method](event.data)
         self.version = event.version
       } else {
-        const classNameRegexes = [/function\s+(\w+)\s?\(/, /class\s+(\w+)\s+extends?/]
-        const match = classNameRegexes.find((regex) => regex.test(self.constructor))
+        const classNameRegexes = [
+          /function\s+(\w+)\s?\(/,
+          /class\s+(\w+)\s+extends?/
+        ]
+        const match = classNameRegexes.find((regex) =>
+          regex.test(self.constructor)
+        )
         const className = match.exec(self.constructor)[1]
-        const errorMessage = `method "${event.method}" does not exist on model "${className.trim()}"`
+        const errorMessage = `method "${
+          event.method
+        }" does not exist on model "${className.trim()}"`
         throw new AggregateError(errorMessage)
       }
     })
@@ -225,7 +231,7 @@ export class Aggregate extends EventEmitter {
    *
    * @returns  {Object}
    */
-  snapshot () {
+  snapshot() {
     this.snapshotVersion = this.version
     const snap = cloneDeep(this, true)
     return this.trimSnapshot(snap)
@@ -240,7 +246,7 @@ export class Aggregate extends EventEmitter {
    * @param  {Object} snapshot  the snapshot to be trimmed.
    * @see Aggregate.prototype.snapshot
    */
-  trimSnapshot (snapshot) {
+  trimSnapshot(snapshot) {
     delete snapshot.eventsToEmit
     delete snapshot.newEvents
     delete snapshot.replaying

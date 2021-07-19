@@ -1,13 +1,8 @@
 <script>
-import { funnel } from '$lib/funnel'
-let email = funnel.user.email
-let creditCard = funnel.creditCard
-funnel.enter()
-
-const submit = async () => {
-  console.log('submitted', arguments)
-  await funnel.completeStep({ email, creditCard })
-}
+  import { funnel } from '$lib/funnel'
+  const email = funnel.user.email
+  const creditCard = funnel.creditCard
+  funnel.enter()
 </script>
 
 <h1>Thanks!</h1>

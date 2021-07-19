@@ -1,13 +1,13 @@
-import { Aggregate } from '$lib/eventsourcing';
+import { Aggregate } from '$lib/eventsourcing'
 import { v4 as uuid } from 'uuid'
 
 export class Funnel extends Aggregate {
   constructor(snapshot, events) {
     super()
 
-    this.session = ""
-    this.user = ""
-    this.creditCard = ""
+    this.session = ''
+    this.user = ''
+    this.creditCard = ''
     this.steps = []
     this.currentStep = 0
     this.orderBump = false
@@ -18,13 +18,13 @@ export class Funnel extends Aggregate {
     this.nextStep = 0
   }
 
-  addStep (step) {
+  addStep(step) {
     this.steps.push(step)
     this.digest('addStep', step)
     this.emit('step.added', this, step)
   }
 
-  async completeStep (data) {
+  async completeStep(data) {
     await this.steps[this.currentStep].action(data)
     this.lastCompletedStep = this.currentStep
 
@@ -40,12 +40,12 @@ export class Funnel extends Aggregate {
     this.digest('completeStep', data)
     this.emit('step.completed', this)
 
-    if (this.nextStep != originalNextStep) {
+    if (this.nextStep !== originalNextStep) {
       this.emit('step.skipped', this)
     }
   }
 
-  enter () {
+  enter() {
     this.currentStep = this.nextStep
     this.session = uuid()
     this.digest('enter')
