@@ -22,7 +22,7 @@ funnel.addStep({
     funnel.upsell = upsell
 
     // skip downsell
-    if (funnel.upsell) funnel.currentStep += 1 
+    if (funnel.upsell) funnel.skipNextStep = true
     resolve(funnel)
   })
 })
@@ -57,10 +57,14 @@ funnel.on('entered', (funnel) => {
   console.log(`Entered Funnel Step ${funnel.currentStep}`, { funnel })
 })
 
-funnel.on('step.completed', (funnel, step) => {
-  console.log('Step Completed', { step })
+funnel.on('step.completed', (funnel) => {
+  console.log(`Completed Funnel Step ${funnel.lastCompletedStep}`, { funnel })
   funnelState.set(funnel)
-  goto(funnel.steps[funnel.currentStep].url)
+  goto(funnel.steps[funnel.nextStep].url)
+})
+
+funnel.on('step.skipped', (funnel, step) => {
+  console.log(`Skipped Funnel Step ${funnel.skippedStep}`, { step })
 })
 
 export {

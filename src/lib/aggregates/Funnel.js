@@ -13,6 +13,9 @@ export class Funnel extends Aggregate {
     this.orderBump = false
     this.upsell = false
     this.downsell = false
+    this.lastCompletedStep = 0
+    this.currentStep = 0
+    this.nextStep = null
   }
 
   addStep (step) {
@@ -23,13 +26,27 @@ export class Funnel extends Aggregate {
 
   async completeStep (data) {
     await this.steps[this.currentStep].action(data)
-    this.currentStep += 1
+    this.lastCompletedStep = this.currentStep
+
+    const originalNextStep = this.currentStep + 1
+    this.nextStep = originalNextStep
+
+    if (this.skipNextStep) {
+      this.skippedStep = originalNextStep
+      this.nextStep = originalNextStep + 1
+      this.skipNextStep = false
+    }
+
     this.digest('completeStep', data)
     this.emit('step.completed', this)
+
+    if (this.nextStep != originalNextStep) {
+      this.emit('step.skipped', this)
+    }
   }
 
   enter () {
-    this.entered = true
+    this.currentStep = this.nextStep || 0
     this.session = uuid()
     this.digest('enter')
     this.emit('entered', this)
