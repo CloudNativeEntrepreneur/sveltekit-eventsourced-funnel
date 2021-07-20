@@ -4,18 +4,18 @@
   funnel.enter()
 
   const yes = async () => {
-    await funnel.completeStep({ upsell: true })
+    await funnel.completeStep({ oto: true })
   }
   const no = async () => {
-    await funnel.completeStep({ upsell: false })
+    await funnel.completeStep({ oto: false })
   }
 </script>
 
-<h1>Upsell</h1>
+<h1>One time offer!</h1>
 
 <p>Thanks for signing up {email}</p>
 
-<button class="yes" on:click|preventDefault={yes}> Buy Upsell</button>
+<button class="yes" on:click|preventDefault={yes}> Buy One time offer! </button>
 
 <button class="no" on:click|preventDefault={no}> No thanks </button>
 

@@ -25,7 +25,7 @@ export class Funnel extends Aggregate {
   }
 
   async completeStep(data) {
-    await this.steps[this.currentStep].action(data)
+    await this.steps[this.currentStep].onSubmit(data)
     this.lastCompletedStep = this.currentStep
 
     const originalNextStep = this.currentStep + 1
@@ -35,6 +35,11 @@ export class Funnel extends Aggregate {
       this.skippedStep = originalNextStep
       this.nextStep = originalNextStep + 1
       this.skipNextStep = false
+    }
+
+    if (this.skipToEnd) {
+      console.log('skipping to end')
+      this.nextStep = this.steps.length - 1
     }
 
     this.digest('completeStep', data)

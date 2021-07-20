@@ -7,18 +7,40 @@ console.log('new funnel', funnel)
 
 funnel.addStep({
   url: '/',
-  action: (data) =>
+  onSubmit: (data) =>
     new Promise((resolve, reject) => {
       const { email } = data
-      console.log('step one', email)
       funnel.user = { email }
       resolve(funnel)
     })
 })
 
 funnel.addStep({
+  url: '/oto',
+  onSubmit: (data) =>
+    new Promise((resolve, reject) => {
+      const { oto } = data
+      funnel.oto = oto
+
+      if (! oto) funnel.skipToEnd = true
+      resolve(funnel)
+    })
+})
+
+funnel.addStep({
+  url: '/checkout',
+  onSubmit: (data) =>
+    new Promise((resolve, reject) => {
+      const { creditCard, orderBump } = data
+      funnel.creditCard = creditCard
+      funnel.orderBump = orderBump
+      resolve(funnel)
+    })
+})
+
+funnel.addStep({
   url: '/upsell',
-  action: (data) =>
+  onSubmit: (data) =>
     new Promise((resolve, reject) => {
       const { upsell } = data
       funnel.upsell = upsell
@@ -31,7 +53,7 @@ funnel.addStep({
 
 funnel.addStep({
   url: '/downsell',
-  action: (data) =>
+  onSubmit: (data) =>
     new Promise((resolve, reject) => {
       const { downsell } = data
       funnel.downsell = downsell
@@ -43,19 +65,8 @@ funnel.addStep({
 })
 
 funnel.addStep({
-  url: '/checkout',
-  action: (data) =>
-    new Promise((resolve, reject) => {
-      const { creditCard, orderBump } = data
-      funnel.creditCard = creditCard
-      funnel.orderBump = orderBump
-      resolve(funnel)
-    })
-})
-
-funnel.addStep({
   url: '/thank-you',
-  action: () =>
+  onSubmit: () =>
     new Promise((resolve, reject) => {
       resolve(funnel)
     })

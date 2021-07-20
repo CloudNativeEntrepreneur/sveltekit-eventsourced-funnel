@@ -8,7 +8,7 @@
   }
 </script>
 
-<h1>Getting Dangerous With DevOps 2.0</h1>
+<h1>Lead magnet</h1>
 
 <form class="content" on:submit|preventDefault={submit}>
   <label for="email">
