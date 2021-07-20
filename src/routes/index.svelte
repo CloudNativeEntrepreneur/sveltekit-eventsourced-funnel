@@ -13,7 +13,7 @@
 <form class="content" on:submit|preventDefault={submit}>
   <label for="email">
     E-mail
-    <input name="email" type="text" bind:value={email} />
+    <input name="email" type="text" bind:value={email} required/>
   </label>
   <input type="submit" />
 </form>

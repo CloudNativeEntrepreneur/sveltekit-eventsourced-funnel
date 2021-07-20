@@ -3,14 +3,15 @@ import { Funnel } from '$lib/aggregates/Funnel'
 import { funnelState } from '$lib/stores/funnelState'
 
 const funnel = new Funnel()
-console.log('new funnel', funnel)
 
 funnel.addStep({
   url: '/',
   onSubmit: (data) =>
     new Promise((resolve, reject) => {
       const { email } = data
+      if (!email) reject(false)
       funnel.user = { email }
+
       resolve(funnel)
     })
 })
