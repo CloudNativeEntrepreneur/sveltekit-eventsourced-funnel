@@ -1,11 +1,23 @@
 <script>
-  import { funnel } from '$lib/funnel'
+  import { browser } from '$app/env'
+  import { loadFunnel } from '$lib/loadFunnel'
 
-  let email = funnel.user.email
-  funnel.enterStep()
+  let funnel
+  let email
+  let submit = (event) => {
+    console.log(event)
+    console.log(email)
+    console.log(funnel)
+  }
 
-  const submit = async () => {
-    await funnel.completeStep({ email })
+  const start = async () => {
+    console.log('index - loading funnel...')
+    funnel = await loadFunnel()
+    console.log('index - funnel loaded', funnel)
+  }
+
+  if (browser) {
+    start()
   }
 </script>
 
