@@ -9,13 +9,25 @@ export class Funnel extends Aggregate {
     this.user = ''
     this.creditCard = ''
     this.steps = []
-    this.currentStep = 0
+    this.initialStep = 0
+    this.entered = false
+    this.currentStep = null
     this.orderBump = false
     this.upsell = false
     this.downsell = false
-    this.lastCompletedStep = 0
-    this.currentStep = 0
-    this.nextStep = 0
+    this.lastCompletedStep = null
+    this.currentStep = null
+    this.nextStep = null
+    this.skipNextStep = false
+    this.skipToEnd = false
+
+    this.rehydrate(snapshot, events)
+  }
+
+  configureSteps(steps) {
+    this.steps = steps
+    this.digest('configureSteps', steps)
+    this.emit('steps.configured', this)
   }
 
   addStep(step) {
@@ -51,9 +63,34 @@ export class Funnel extends Aggregate {
   }
 
   enter() {
-    this.currentStep = this.nextStep
+    if (this.entered) {
+      // user is returning
+      // did user have a previousSession? If so, store so we can link them in analytics.
+      this.previousSession = this.session
+      console.log('Welcome back!')
+
+    } else {
+      console.log('Welcome!')
+      this.entered = true
+      this.currentStep = this.initialStep
+      this.nextStep = this.currentStep + 1
+    }
     this.session = uuid()
+
     this.digest('enter')
     this.emit('entered', this)
+  }
+
+  enterStep() {
+    // this.session = uuid()
+    this.currentStep = this.nextStep
+    this.digest('enter')
+    this.emit('step.entered', this)
+  }
+
+  exit() {
+    this.complete = true
+    this.digest('exit')
+    this.digest('exited')
   }
 }

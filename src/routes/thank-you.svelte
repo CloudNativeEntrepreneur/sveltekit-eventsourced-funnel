@@ -1,11 +1,13 @@
 <script>
   import { funnel } from '$lib/funnel'
+  import { funnelState } from '$lib/stores/funnelState'
   const email = funnel.user.email
   const creditCard = funnel.creditCard
   const oto = funnel.oto
   const upsell = funnel.upsell
   const downsell = funnel.downsell
-  funnel.enter()
+  funnel.exit()
+  console.log($funnelState)
 </script>
 
 <h1>Thanks!</h1>
@@ -17,3 +19,5 @@
   {#if upsell}<li>upsell: {upsell}</li>{/if}
   {#if downsell}<li>downsell: {downsell}</li>{/if}
 </ul>
+
+{$funnelState?.user?.email}

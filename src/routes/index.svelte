@@ -1,7 +1,8 @@
 <script>
   import { funnel } from '$lib/funnel'
-  let email = ''
-  funnel.enter()
+
+  let email = funnel.user.email
+  funnel.enterStep()
 
   const submit = async () => {
     await funnel.completeStep({ email })
@@ -13,7 +14,7 @@
 <form class="content" on:submit|preventDefault={submit}>
   <label for="email">
     E-mail
-    <input name="email" type="text" bind:value={email} required/>
+    <input name="email" type="text" bind:value={email} required />
   </label>
   <input type="submit" />
 </form>
