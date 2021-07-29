@@ -17,11 +17,8 @@ export const loadFunnel = () => {
       console.log('loadFunnel - initializing new funnel')
       funnel = new Funnel()
       await funnel.initialize('session')
-      console.log('loadFunnel - configuring steps')
       await funnel.configureSteps(steps)
-      console.log('loadFunnel - entering funnel')
       await funnel.enter()
-      console.log('loadFunnel - funnel', funnel)
     }
   
     try {
