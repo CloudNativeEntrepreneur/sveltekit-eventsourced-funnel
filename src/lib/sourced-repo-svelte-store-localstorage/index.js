@@ -150,12 +150,8 @@ export class Repository extends EventEmitter {
         entity.version >= entity.snapshotVersion + self.snapshotFrequency
       ) {
         const snapshot = entity.snapshot()
-
         const snapshots = get(this.snapshots)
-
-        // this.snapshots.set([snapshot, ...snapshots])
-        // only store one as local storage space is limited
-        this.snapshots.set([snapshot])
+        this.snapshots.set([snapshot, ...snapshots])
 
         log('committed ${self.entityType.name}.snapshot for id ${entity.id}', snapshot)
         
