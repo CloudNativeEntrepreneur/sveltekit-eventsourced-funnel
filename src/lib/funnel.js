@@ -14,78 +14,6 @@ const funnel = new Funnel(localFunnelState)
 
 let started = false
 
-const steps = [
-  {
-    url: '/',
-    name: 'Lead Magnet',
-    onSubmit: (data) =>
-      new Promise((resolve, reject) => {
-        const { email } = data
-        if (!email) reject(false)
-        funnel.user = { email }
-
-        resolve(funnel)
-      })
-  },
-  {
-    url: '/oto',
-    name: 'One Time Offer',
-    onSubmit: (data) =>
-      new Promise((resolve, reject) => {
-        const { oto } = data
-        funnel.oto = oto
-
-        if (!oto) funnel.skipToEnd = true
-        resolve(funnel)
-      })
-  },
-  {
-    url: '/checkout',
-    name: 'Checkout',
-    onSubmit: (data) =>
-      new Promise((resolve, reject) => {
-        const { creditCard, orderBump } = data
-        funnel.creditCard = creditCard
-        funnel.orderBump = orderBump
-        resolve(funnel)
-      })
-  },
-  {
-    url: '/upsell',
-    name: 'Upsell',
-    onSubmit: (data) =>
-      new Promise((resolve, reject) => {
-        const { upsell } = data
-        funnel.upsell = upsell
-
-        // skip downsell
-        if (funnel.upsell) funnel.skipNextStep = true
-        resolve(funnel)
-      })
-  },
-  {
-    url: '/downsell',
-    name: 'Downsell',
-    onSubmit: (data) =>
-      new Promise((resolve, reject) => {
-        const { downsell } = data
-        funnel.downsell = downsell
-
-        // skip checkout if they didnt buy
-        if (!funnel.downsell) funnel.skipNextStep = true
-        resolve(funnel)
-      })
-  },
-  {
-    url: '/thank-you',
-    name: 'Thank You',
-    onSubmit: () =>
-      new Promise((resolve, reject) => {
-        resolve(funnel)
-      })
-  }
-]
-
 const trimForLocalState = (funnel) => {
   const clone = Object.assign({}, funnel.snapshot())
   // steps have functions and will get recreated when funnel loads
@@ -105,14 +33,14 @@ const trimForLocalState = (funnel) => {
 }
 
 const storeLocalState = (funnel) => {
-  let snapshot = trimForLocalState(funnel)
+  const snapshot = trimForLocalState(funnel)
   funnelState.set(snapshot)
 }
 
 const start = async () => {
   console.log('Starting!')
   started = true
-  
+
   console.log('new funnel', funnel)
 
   await funnel.configureSteps(steps)
@@ -126,18 +54,25 @@ const start = async () => {
   funnel.once('entered', async (funnel) => {
     console.log('Entered Funnel', funnel)
     funnel.emit('funnel.state.changed', funnel)
-    
+
     const usersCurrentStepUrl = funnel.steps[funnel.currentStep].url
     const currentUrl = document.location.pathname
     if (usersCurrentStepUrl != currentUrl) {
-      console.log(`The user's last completed step was ${usersCurrentStepUrl}. Redirecting...`)
+      console.log(
+        `The user's last completed step was ${usersCurrentStepUrl}. Redirecting...`
+      )
       return await goto(funnel.steps[funnel.lastCompletedStep].url)
     }
     console.log('No redirect required.')
   })
 
   funnel.on('step.entered', (funnel) => {
-    console.log(`Entered Funnel Step ${funnel.currentStep} - ${funnel.steps[funnel.currentStep].name}`, { funnel })
+    console.log(
+      `Entered Funnel Step ${funnel.currentStep} - ${
+        funnel.steps[funnel.currentStep].name
+      }`,
+      { funnel }
+    )
     funnel.emit('funnel.state.changed', funnel)
   })
 
