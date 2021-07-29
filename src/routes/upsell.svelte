@@ -1,7 +1,7 @@
 <script>
   import { funnel } from '$lib/funnel'
   const email = funnel.user.email
-  funnel.enter()
+  funnel.enterStep()
 
   const yes = async () => {
     await funnel.completeStep({ upsell: true })

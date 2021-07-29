@@ -2,7 +2,7 @@
   import { funnel } from '$lib/funnel'
   let email = funnel.user.email
   let creditCard = ''
-  funnel.enter()
+  funnel.enterStep()
 
   const submit = async () => {
     console.log('submitted')
