@@ -10,7 +10,7 @@ export class Funnel extends Aggregate {
     this.session = ''
 
     // data to collect
-    this.user = ''
+    this.email = ''
     this.creditCard = ''
     this.orderBump = false
     this.upsell = false
@@ -77,5 +77,11 @@ export class Funnel extends Aggregate {
     this.complete = true
     this.digest('exit')
     this.enqueue('exited', this)
+  }
+
+  setEmail(email) {
+    this.email = email
+    this.digest('setEmail', email)
+    this.enqueue('email.set', this)
   }
 }
