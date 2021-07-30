@@ -9,7 +9,7 @@ export class Repository extends EventEmitter {
     entityType,
     options = {
       indices: [],
-      forceSnapshot: true
+      forceSnapshot: false
     }
   ) {
     super()
@@ -24,19 +24,64 @@ export class Repository extends EventEmitter {
     this.forceSnapshot = options.forceSnapshot
 
     // snapshot store setup
-    // const snapshotCollectionName = `${entityType.name}.snapshots`
-    const snapshots = writable([])
+    const snapshotsKey = `${entityType.name}.snapshots`
+    let localSnapshots
+    if (typeof localStorage !== "undefined") {
+      localSnapshots = JSON.parse(
+        localStorage.getItem(snapshotsKey)
+      );
+      console.log("Found local snapshots", localSnapshots);
+    }
+    const snapshots = writable(localSnapshots || [])
     this.snapshots = snapshots
 
-    // event store setup
-    // const eventCollectionName = `${entityType.name}.events`
-    const events = writable([])
-    this.events = events
+    this.subscribedToSnapshots = false
+    this.snapshots.subscribe((value) => {
+      if (! this.subscribedToSnapshots) {
+        console.log('starting snapshots subscription')
+        this.subscribedToSnapshots = true
+      } else {
+        console.log('snapshots state changed', value)
+        if (typeof localStorage !== 'undefined') {
+          console.log(
+            'updating snapshots in local storage',
+            snapshotsKey,
+            JSON.stringify(value)
+          )
+          localStorage.setItem(snapshotsKey, JSON.stringify(value))
+        }
+      }
+    })
 
-    // history store setup
-    // const historyCollectionName = `${entityType.name}.history`
-    const history = writable([])
-    this.history = history
+    // event store setup
+    const eventsKey = `${entityType.name}.events`
+    let localEvents
+    if (typeof localStorage !== "undefined") {
+      localEvents = JSON.parse(
+        localStorage.getItem(eventsKey)
+      );
+      console.log("Found local events", localEvents);
+    }
+    const events = writable(localEvents || [])
+    this.events = events
+   
+    this.subscribedToEvents = false
+    this.events.subscribe((value) => {
+      if (! this.subscribedToEvents) {
+        console.log('starting events subscription')
+        this.subscribedToEvents = true
+      } else {
+        console.log('events state changed', value)
+        if (typeof localStorage !== 'undefined') {
+          console.log(
+            'updating events in local storage',
+            eventsKey,
+            JSON.stringify(value)
+          )
+          localStorage.setItem(eventsKey, JSON.stringify(value))
+        }
+      }
+    })
 
     log(`initialized ${this.entityType.name} entity store`)
 
@@ -92,10 +137,12 @@ export class Repository extends EventEmitter {
 
       const allSnapshots = get(this.snapshots)
       const snapshots = allSnapshots.filter(snapshot => snapshot[index] === value)
-
       const snapshot = snapshots[0]
+
       const allEvents = get(this.events)
-      const events = allEvents.filter(event => event[index] === value)
+      const events = allEvents
+        .filter(event => event[index] === value)
+        .filter(event => snapshot ? event.version > snapshot.version : true)
 
       log({ snapshots, snapshot, events })
 
@@ -131,8 +178,7 @@ export class Repository extends EventEmitter {
       })
   
       const previousEvents = get(this.events)
-      this.history.set(previousEvents)
-      this.events.set(newEvents)
+      this.events.set([...previousEvents, ...newEvents])
       entity.newEvents = []
       log(`committed ${this.entityType.name}.events for id ${entity.id}`)
 
@@ -153,7 +199,7 @@ export class Repository extends EventEmitter {
         const snapshots = get(this.snapshots)
         this.snapshots.set([snapshot, ...snapshots])
 
-        log('committed ${self.entityType.name}.snapshot for id ${entity.id}', snapshot)
+        log(`committed ${self.entityType.name}.snapshot for id ${entity.id}`, snapshot)
         
         return resolve(entity)
       } else {
