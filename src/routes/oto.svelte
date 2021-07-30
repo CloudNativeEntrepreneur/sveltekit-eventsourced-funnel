@@ -5,18 +5,15 @@
   import { funnelRepository } from '$lib/funnelRepository'
   import { goto } from '$app/navigation'
 
-  let funnel
   let email
-  let currentStep
-  let nextStep
-  let finalStep
+  let funnel
 
   const start = async () => {
     funnel = await loadFunnel()
 
     email = funnel.email
 
-    currentStep =
+    const currentStep =
       funnel.steps
         .filter((step) => step.url === $page.path)
         .reduce((step) => step)
@@ -24,8 +21,8 @@
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
     
-    nextStep = funnel.steps[nextStepIndex]
-    finalStep = funnel.steps[funnel.steps.length - 1]
+    const nextStep = funnel.steps[nextStepIndex]
+    const finalStep = funnel.steps[funnel.steps.length - 1]
 
     // if accepted, go to next step
     funnel.on('oto.accepted', async () => {

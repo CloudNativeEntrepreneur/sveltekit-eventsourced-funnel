@@ -22,11 +22,14 @@ export class Repository extends EventEmitter {
 
     // snapshot store setup
     const snapshotsKey = `${EntityType.name}.snapshots`
+
+    // load snapshots from local storage
     let localSnapshots
     if (typeof localStorage !== 'undefined') {
       localSnapshots = JSON.parse(localStorage.getItem(snapshotsKey))
-      log('Found local snapshots', localSnapshots)
+      if (localSnapshots) log('Found local snapshots', localSnapshots)
     }
+
     const snapshots = writable(localSnapshots || [])
     this.snapshots = snapshots
 
@@ -43,11 +46,14 @@ export class Repository extends EventEmitter {
 
     // event store setup
     const eventsKey = `${EntityType.name}.events`
+
+    // load events from local storage
     let localEvents
     if (typeof localStorage !== 'undefined') {
       localEvents = JSON.parse(localStorage.getItem(eventsKey))
-      log('Found local events', localEvents)
+      if (localEvents) log('Found local events', localEvents)
     }
+
     const events = writable(localEvents || [])
     this.events = events
 
