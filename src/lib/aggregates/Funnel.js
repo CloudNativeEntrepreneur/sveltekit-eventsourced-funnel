@@ -81,4 +81,16 @@ export class Funnel extends Aggregate {
     this.digest('setEmail', email)
     this.enqueue('email.set', this)
   }
+
+  acceptOTO() {
+    this.oto = true
+    this.digest('acceptOTO')
+    this.enqueue('oto.accepted')
+  }
+  
+  declineOTO() {
+    this.oto = true
+    this.digest('declineOTO')
+    this.enqueue('oto.declined')
+  }
 }
