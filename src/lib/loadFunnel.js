@@ -30,6 +30,5 @@ export const loadFunnel = () => {
     }
   
     return resolve(funnel)
-
   })
 }
