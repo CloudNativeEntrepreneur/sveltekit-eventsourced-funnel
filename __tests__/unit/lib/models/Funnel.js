@@ -1,5 +1,5 @@
 import { expect } from '@jest/globals'
-import { Funnel } from 'lib/models/Funnel'
+import { Funnel } from '$lib/models/Funnel'
 
 // const steps defined below tests - looked too messy at the top
 
