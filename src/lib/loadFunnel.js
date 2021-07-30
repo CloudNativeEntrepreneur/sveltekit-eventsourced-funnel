@@ -12,15 +12,15 @@ export const loadFunnel = () => {
       console.error(err)
       throw err
     }
-  
-    if (! funnel) {
+
+    if (!funnel) {
       console.log('loadFunnel - initializing new funnel')
       funnel = new Funnel()
       await funnel.initialize('session')
       await funnel.configureSteps(steps)
       await funnel.enter()
     }
-  
+
     try {
       console.log('loadFunnel - commiting funnel', funnel)
       await funnelRepository.commit(funnel)
@@ -28,7 +28,7 @@ export const loadFunnel = () => {
       console.error(err)
       throw err
     }
-  
+
     return resolve(funnel)
   })
 }

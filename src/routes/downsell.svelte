@@ -1,19 +1,19 @@
 <script>
-  import { funnel } from '$lib/funnel'
-  const email = funnel.user.email
-  funnel.enterStep()
+  // import { funnel } from '$lib/funnel'
+  // const email = funnel.user.email
+  // funnel.enterStep()
 
-  const yes = async () => {
-    await funnel.completeStep({ downsell: true })
-  }
-  const no = async () => {
-    await funnel.completeStep({ downsell: false })
-  }
+  // const yes = async () => {
+  //   await funnel.completeStep({ downsell: true })
+  // }
+  // const no = async () => {
+  //   await funnel.completeStep({ downsell: false })
+  // }
 </script>
 
 <h1>Downsell</h1>
 
-<p>How about this instead, {email}?</p>
+<!-- <p>How about this instead, {email}?</p>
 
 <button class="yes" on:click|preventDefault={yes}> Ok, Let's do that! </button>
 
@@ -27,4 +27,4 @@
   .yes {
     background-color: greenyellow;
   }
-</style>
+</style> -->

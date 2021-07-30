@@ -1,23 +1,18 @@
 <script>
-  import { funnel } from '$lib/funnel'
-  import { funnelState } from '$lib/stores/funnelState'
-  const email = funnel.user.email
-  const creditCard = funnel.creditCard
-  const oto = funnel.oto
-  const upsell = funnel.upsell
-  const downsell = funnel.downsell
-  funnel.exit()
-  console.log($funnelState)
+  // const email = funnel.user.email
+  // const creditCard = funnel.creditCard
+  // const oto = funnel.oto
+  // const upsell = funnel.upsell
+  // const downsell = funnel.downsell
+  // funnel.exit()
 </script>
 
 <h1>Thanks!</h1>
 
-<ul>
+<!-- <ul>
   {#if email}<li>Email: {email}</li>{/if}
   {#if creditCard}<li>Card #: {creditCard}</li>{/if}
   {#if oto}<li>OTO: {oto}</li>{/if}
   {#if upsell}<li>upsell: {upsell}</li>{/if}
   {#if downsell}<li>downsell: {downsell}</li>{/if}
-</ul>
-
-{$funnelState?.user?.email}
+</ul> -->

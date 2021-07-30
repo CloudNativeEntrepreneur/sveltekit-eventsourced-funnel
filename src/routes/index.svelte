@@ -1,34 +1,32 @@
 <script>
   import { browser } from '$app/env'
   import { loadFunnel } from '$lib/loadFunnel'
-  import { page } from '$app/stores';
-  import { funnelRepository } from '$lib/funnelRepository';
+  import { page } from '$app/stores'
+  import { funnelRepository } from '$lib/funnelRepository'
 
   let funnel
   let email
   let currentStep
 
-  let submit = (event) => {
+  const submit = (event) => {
     console.log(event)
     console.log(email)
     console.log(funnel)
   }
 
   const start = async () => {
-    console.log('index - loading funnel...')
     funnel = await loadFunnel()
-    
-    currentStep = funnel.steps.filter(step => step.url === $page.path).reduce(step => step)
-    console.log('index - funnel loaded', { funnel, currentStep })
+
+    currentStep = funnel.steps
+      .filter((step) => step.url === $page.path)
+      .reduce((step) => step)
 
     currentStep.on('entered', async () => {
-      console.log('entered step')
       funnel.setCurrentStep(currentStep.url)
       await funnelRepository.commit(funnel)
     })
 
     await currentStep.enter()
-
   }
 
   if (browser) {
