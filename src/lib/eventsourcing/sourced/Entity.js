@@ -8,22 +8,22 @@ const log = debug('event-sourcing')
 /**
  * Extending native Error.
  *
- * @class {Function} AggregateError
+ * @class {Function} EntityError
  * @param {String} msg The error message.
  */
-class AggregateError extends Error {
+class EntityError extends Error {
   constructor(...args) {
     super(...args)
-    log('Aggregate Error: ', this)
-    Error.captureStackTrace(this, AggregateError)
+    log('Entity Error: ', this)
+    Error.captureStackTrace(this, EntityError)
   }
 }
 
 /**
- * Creates an event-sourced Aggregate.
+ * Creates an event-sourced Entity.
  *
- * @class {Function} Aggregate
- * @param {Object} [snapshot] A previously saved snapshot of an Aggregate.
+ * @class {Function} Entity
+ * @param {Object} [snapshot] A previously saved snapshot of an Entity.
  * @param {Array} [events] An array of events to apply on instantiation.
  * @requires events
  * @requires debug
@@ -32,7 +32,7 @@ class AggregateError extends Error {
  * @license MIT
  */
 
-export class Aggregate extends EventEmitter {
+export class Entity extends EventEmitter {
   constructor() {
     super()
 
@@ -57,19 +57,19 @@ export class Aggregate extends EventEmitter {
     this.replaying = false
 
     /**
-     * Holds the version of the latest snapshot for the Aggregate.
+     * Holds the version of the latest snapshot for the Entity.
      * @member {Number} snapshotVersion
      */
     this.snapshotVersion = 0
 
     /**
-     * Holds the event's timestamp in the Aggregate.
+     * Holds the event's timestamp in the Entity.
      * @member {Number} timestamp
      */
     this.timestamp = Date.now()
 
     /**
-     * Holds the current version of the Aggregate.
+     * Holds the current version of the Entity.
      * @member {Number} version
      */
     this.version = 0
@@ -117,7 +117,7 @@ export class Aggregate extends EventEmitter {
 
   /**
    * Digest a command with given data.This is called whenever you want to record
-   * a command into the events for the Aggregate. If called during replay, this
+   * a command into the events for the Entity. If called during replay, this
    * method does nothing.
    *
    * @param  {String} method  the name of the method/command you want to digest.
@@ -138,13 +138,13 @@ export class Aggregate extends EventEmitter {
   }
 
   /**
-   * Merge a snapshot onto the Aggregate.
+   * Merge a snapshot onto the Entity.
    *
    * For every property passed in the snapshot, the value is deep-cloned and then
    * merged into the instance through mergeProperty. See mergeProperty for details.
    *
    * @param  {Object} snapshot  snapshot object.
-   * @see Aggregate.mergeProperty
+   * @see Entity.mergeProperty
    */
   merge(snapshot) {
     log('merging snapshot', { snapshot })
@@ -167,7 +167,7 @@ export class Aggregate extends EventEmitter {
    * @param  {String} name   the name of the property being merged.
    * @param  {Object} value  the value of the property being merged.
    * @see mergeProperties
-   * @see Aggregate.mergeProperty
+   * @see Entity.mergeProperty
    */
   mergeProperty(name, value) {
     if (typeof value === 'object' && typeof this[name] === 'object') {
@@ -216,7 +216,7 @@ export class Aggregate extends EventEmitter {
         const errorMessage = `method "${
           event.method
         }" does not exist on model "${className.trim()}"`
-        throw new AggregateError(errorMessage)
+        throw new EntityError(errorMessage)
       }
     })
 
@@ -224,7 +224,7 @@ export class Aggregate extends EventEmitter {
   }
 
   /**
-   * Create a snapshot of the current state of the Aggregate instance.
+   * Create a snapshot of the current state of the Entity instance.
    *
    * Here the instance's snapshotVersion property is set to the current version,
    * then the instance is deep-cloned and the clone is trimmed of the internal
@@ -241,11 +241,11 @@ export class Aggregate extends EventEmitter {
   /**
    * Remove the internal event-sourcing properties from the passed snapshot.
    *
-   * Snapshots are to contain only Aggregate data properties. This trims all other
+   * Snapshots are to contain only Entity data properties. This trims all other
    * properties from the snapshot.
    *
    * @param  {Object} snapshot  the snapshot to be trimmed.
-   * @see Aggregate.prototype.snapshot
+   * @see Entity.prototype.snapshot
    */
   trimSnapshot(snapshot) {
     delete snapshot.eventsToEmit

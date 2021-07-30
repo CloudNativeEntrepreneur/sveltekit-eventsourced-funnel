@@ -1,7 +1,7 @@
-import { Aggregate } from '$lib/eventsourcing'
+import { Entity } from '$lib/eventsourcing/sourced'
 import { v4 as uuid } from 'uuid'
 
-export class Funnel extends Aggregate {
+export class Funnel extends Entity {
   constructor(snapshot, events) {
     super()
 

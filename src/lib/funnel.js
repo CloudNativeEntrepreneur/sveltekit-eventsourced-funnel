@@ -1,11 +1,10 @@
-import { funnelRepository } from '$lib/funnelRepository'
-import { Funnel } from '$lib/aggregates/Funnel'
+import { funnelRepository } from '$lib/repositories/funnelRepository'
+import { Funnel } from '$lib/models/Funnel'
 import { steps } from '$lib/steps'
 
-export const loadFunnel = () => {
+export const load = () => {
   return new Promise(async (resolve, reject) => {
     let funnel
-    console.log('loadFunnel - Loading funnel...')
     try {
       funnel = await funnelRepository.get('session')
     } catch (err) {
@@ -14,7 +13,6 @@ export const loadFunnel = () => {
     }
 
     if (!funnel) {
-      console.log('loadFunnel - initializing new funnel')
       funnel = new Funnel()
       funnel.initialize('session')
       funnel.configureSteps(steps)
@@ -22,7 +20,6 @@ export const loadFunnel = () => {
     }
 
     try {
-      console.log('loadFunnel - commiting funnel', funnel)
       await funnelRepository.commit(funnel)
     } catch (err) {
       console.error(err)

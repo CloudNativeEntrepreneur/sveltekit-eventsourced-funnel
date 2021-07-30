@@ -1,16 +1,16 @@
 <script>
   import { browser } from '$app/env'
-  import { loadFunnel } from '$lib/loadFunnel'
-  import { page } from '$app/stores'
-  import { funnelRepository } from '$lib/funnelRepository'
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+  import { load } from '$lib/funnel'
+  import { funnelRepository } from '$lib/repositories/funnelRepository'
 
   let creditCard
   let email
   let funnel
 
   const start = async () => {
-    funnel = await loadFunnel()
+    funnel = await load()
 
     email = funnel.email
 

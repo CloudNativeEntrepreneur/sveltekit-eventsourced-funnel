@@ -1,8 +1,8 @@
 <script>
   import { browser } from '$app/env'
-  import { loadFunnel } from '$lib/loadFunnel'
+  import { load } from '$lib/funnel'
   import { page } from '$app/stores'
-  import { funnelRepository } from '$lib/funnelRepository'
+  import { funnelRepository } from '$lib/repositories/funnelRepository'
 
   let email
   let oto
@@ -12,7 +12,7 @@
   let funnel
 
   const start = async () => {
-    funnel = await loadFunnel()
+    funnel = await load()
 
     email = funnel.email
     oto = funnel.oto
