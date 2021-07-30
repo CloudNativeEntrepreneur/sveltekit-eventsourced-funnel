@@ -67,6 +67,7 @@ export class Funnel extends Aggregate {
   }
 
   complete() {
+    if (this.completed) return
     this.completed = true
     this.digest('complete')
     this.enqueue('completed', this)
