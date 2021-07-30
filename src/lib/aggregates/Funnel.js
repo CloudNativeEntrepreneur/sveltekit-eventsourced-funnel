@@ -12,6 +12,9 @@ export class Funnel extends Aggregate {
     // data to collect
     this.user = ''
     this.creditCard = ''
+    this.orderBump = false
+    this.upsell = false
+    this.downsell = false
 
     // steps
     this.steps = []
@@ -19,12 +22,8 @@ export class Funnel extends Aggregate {
     // funnel state
     this.entered = false
     this.currentStep = null
-    this.orderBump = false
-    this.upsell = false
-    this.downsell = false
+
     this.lastCompletedStep = null
-    this.currentStep = null
-    this.nextStep = null
     this.skipNextStep = false
     this.skipToEnd = false
 
