@@ -13,13 +13,12 @@
 
     email = funnel.email
 
-    const currentStep =
-      funnel.steps
-        .filter((step) => step.url === $page.path)
-        .reduce((step) => step)
+    const currentStep = funnel.steps
+      .filter((step) => step.url === $page.path)
+      .reduce((step) => step)
 
     // only step left
-    let finalStep = funnel.steps[funnel.steps.length - 1]
+    const finalStep = funnel.steps[funnel.steps.length - 1]
 
     // if accepted, go to final step
     funnel.on('downsell.accepted', async () => {

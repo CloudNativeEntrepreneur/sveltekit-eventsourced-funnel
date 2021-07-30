@@ -13,10 +13,9 @@
 
     email = funnel.email
 
-    const currentStep =
-      funnel.steps
-        .filter((step) => step.url === $page.path)
-        .reduce((step) => step)
+    const currentStep = funnel.steps
+      .filter((step) => step.url === $page.path)
+      .reduce((step) => step)
 
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1

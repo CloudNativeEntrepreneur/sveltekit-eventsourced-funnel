@@ -4,7 +4,7 @@
   import { page } from '$app/stores'
   import { funnelRepository } from '$lib/funnelRepository'
   import { goto } from '$app/navigation'
-  
+
   let creditCard
   let email
   let funnel
@@ -14,14 +14,13 @@
 
     email = funnel.email
 
-    const currentStep =
-      funnel.steps
-        .filter((step) => step.url === $page.path)
-        .reduce((step) => step)
+    const currentStep = funnel.steps
+      .filter((step) => step.url === $page.path)
+      .reduce((step) => step)
 
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
-    
+
     const nextStep = funnel.steps[nextStepIndex]
 
     funnel.on('checkout.completed', async () => {

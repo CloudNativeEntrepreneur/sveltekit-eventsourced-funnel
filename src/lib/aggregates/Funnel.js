@@ -84,22 +84,22 @@ export class Funnel extends Aggregate {
     this.digest('acceptOTO')
     this.enqueue('oto.accepted', this)
   }
-  
+
   declineOTO() {
     this.oto = false
     this.digest('declineOTO')
     this.enqueue('oto.declined', this)
   }
-  
+
   // this is obviously bad and just an example
-  // but you could create a stripe charge here and 
+  // but you could create a stripe charge here and
   // store the token, for example
   checkout({ creditCard }) {
     this.creditCard = creditCard
-    this.digest('checkout', {creditCard})
+    this.digest('checkout', { creditCard })
     this.enqueue('checkout.completed', this)
   }
-  
+
   acceptUpsell() {
     this.upsell = true
     this.digest('acceptUpsell')
@@ -111,7 +111,7 @@ export class Funnel extends Aggregate {
     this.digest('declineUpsell')
     this.enqueue('upsell.declined', this)
   }
-  
+
   acceptDownsell() {
     this.downsell = true
     this.digest('acceptDownsell')
@@ -123,5 +123,4 @@ export class Funnel extends Aggregate {
     this.digest('declineDownsell')
     this.enqueue('downsell.declined', this)
   }
-  
 }

@@ -13,14 +13,13 @@
 
     email = funnel.email
 
-    const currentStep =
-      funnel.steps
-        .filter((step) => step.url === $page.path)
-        .reduce((step) => step)
+    const currentStep = funnel.steps
+      .filter((step) => step.url === $page.path)
+      .reduce((step) => step)
 
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
-    
+
     const nextStep = funnel.steps[nextStepIndex]
     const finalStep = funnel.steps[funnel.steps.length - 1]
 

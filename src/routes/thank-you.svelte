@@ -3,7 +3,6 @@
   import { loadFunnel } from '$lib/loadFunnel'
   import { page } from '$app/stores'
   import { funnelRepository } from '$lib/funnelRepository'
-  import { goto } from '$app/navigation'
 
   let email
   let oto
@@ -21,10 +20,9 @@
     upsell = funnel.upsell
     downsell = funnel.downsell
 
-    const currentStep =
-      funnel.steps
-        .filter((step) => step.url === $page.path)
-        .reduce((step) => step)
+    const currentStep = funnel.steps
+      .filter((step) => step.url === $page.path)
+      .reduce((step) => step)
 
     await funnel.setCurrentStep(currentStep.url)
     await funnel.complete()
