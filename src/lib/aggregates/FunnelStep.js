@@ -13,7 +13,7 @@ export class FunnelStep extends Aggregate {
     this.rehydrate(snapshot, events)
   }
 
-  initialize({id, url, name, onSubmit}) {
+  initialize({ id, url, name, onSubmit }) {
     this.id = id
     this.url = url
     this.name = name
@@ -43,5 +43,4 @@ export class FunnelStep extends Aggregate {
     this.digest('enter')
     this.emit('entered', this)
   }
-
 }

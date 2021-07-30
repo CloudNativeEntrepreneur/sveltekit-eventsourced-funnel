@@ -11,5 +11,9 @@ module.exports = {
     browser: true,
     es2017: true,
     node: true
+  },
+  rules: {
+    'no-async-promise-executor': 'off', // why?
+    'import/first': 'off' // this doesnt play nice with .svelte files
   }
 }

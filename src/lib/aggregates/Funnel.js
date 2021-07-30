@@ -37,9 +37,7 @@ export class Funnel extends Aggregate {
   }
 
   configureSteps(steps) {
-    console.log('configuring steps')
-    let funnelSteps = steps.map(step => new FunnelStep(step))
-    console.log({ funnelSteps })
+    const funnelSteps = steps.map((step) => new FunnelStep(step))
     this.steps = funnelSteps
     this.digest('configureSteps', steps)
     this.enqueue('steps.configured', this, funnelSteps)
@@ -53,9 +51,8 @@ export class Funnel extends Aggregate {
   }
 
   setCurrentStep(stepUrl) {
-    if (this.currentStep === stepUrl) return;
+    if (this.currentStep === stepUrl) return
     this.currentStep = stepUrl
-
     this.digest('setCurrentStep', stepUrl)
     this.enqueue('currentStep.set', this, stepUrl)
   }
