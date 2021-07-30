@@ -3,7 +3,6 @@
   import { loadFunnel } from '$lib/loadFunnel'
   import { page } from '$app/stores'
   import { funnelRepository } from '$lib/funnelRepository'
-  import { FunnelStep } from '$lib/entities/FunnelStep'
   import { goto } from '$app/navigation'
 
   let funnel
@@ -11,43 +10,31 @@
   let currentStep
   let nextStep
 
-  const submit = async (event) => {
-    console.log('submit', currentStep)
-    await currentStep.submit({ email })
-  }
-
   const start = async () => {
     funnel = await loadFunnel()
 
     email = funnel.email
 
+    currentStep =
+      funnel.steps
+        .filter((step) => step.url === $page.path)
+        .reduce((step) => step)
+
+    const nextStepIndex =
+      funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
+
+    nextStep = funnel.steps[nextStepIndex]
+
     funnel.on('email.set', async () => {
       await goto(nextStep.url)
     })
 
-    currentStep = new FunnelStep(
-      funnel.steps
-        .filter((step) => step.url === $page.path)
-        .reduce((step) => step)
-    )
+    await funnel.setCurrentStep(currentStep.url)
+    await funnelRepository.commit(funnel)
+  }
 
-    const nextStepIndex =
-      funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
-    nextStep = new FunnelStep(funnel.steps[nextStepIndex])
-
-    currentStep.on('entered', async () => {
-      await funnel.setCurrentStep(currentStep.url)
-      await funnelRepository.commit(funnel)
-    })
-
-    currentStep.on('submitted', async ({ submittedData }) => {
-      console.log('submitted!')
-      const { email } = submittedData
-      await funnel.setEmail(email)
-      await funnelRepository.commit(funnel)
-    })
-
-    await currentStep.enter()
+  const submit = async () => {
+    await funnel.setEmail(email)
     await funnelRepository.commit(funnel)
   }
 

@@ -3,49 +3,57 @@
   import { loadFunnel } from '$lib/loadFunnel'
   import { page } from '$app/stores'
   import { funnelRepository } from '$lib/funnelRepository'
-  import { FunnelStep } from '$lib/entities/FunnelStep'
-  // import { goto } from '$app/navigation'
+  import { goto } from '$app/navigation'
 
   let funnel
   let email
   let currentStep
   let nextStep
+  let finalStep
 
   const start = async () => {
     funnel = await loadFunnel()
 
     email = funnel.email
 
-    currentStep = new FunnelStep(
+    currentStep =
       funnel.steps
         .filter((step) => step.url === $page.path)
         .reduce((step) => step)
-    )
 
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
-    nextStep = new FunnelStep(funnel.steps[nextStepIndex])
+    
+    nextStep = funnel.steps[nextStepIndex]
+    finalStep = funnel.steps[funnel.steps.length - 1]
 
-    currentStep.on('entered', async () => {
-      funnel.setCurrentStep(currentStep.url)
-      await funnelRepository.commit(funnel)
+    // if accepted, go to next step
+    funnel.on('oto.accepted', async () => {
+      await goto(nextStep.url)
     })
 
-    currentStep.on('submitted', async ({ submittedData }) => {
-      const { email } = submittedData
-      funnel.setEmail(email)
-      await funnelRepository.commit(funnel)
+    // if declined, send to the end
+    funnel.on('oto.declined', async () => {
+      await goto(finalStep.url)
     })
 
-    await currentStep.enter()
+    await funnel.setCurrentStep(currentStep.url)
+    await funnelRepository.commit(funnel)
   }
 
   if (browser) {
     start()
   }
 
-  const yes = () => {}
-  const no = () => {}
+  const yes = async () => {
+    await funnel.acceptOTO()
+    await funnelRepository.commit(funnel)
+  }
+
+  const no = async () => {
+    await funnel.declineOTO()
+    await funnelRepository.commit(funnel)
+  }
 </script>
 
 <h1>One time offer!</h1>
