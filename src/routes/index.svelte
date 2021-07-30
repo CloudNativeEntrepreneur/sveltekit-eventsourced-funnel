@@ -5,17 +5,15 @@
   import { funnelRepository } from '$lib/funnelRepository'
   import { goto } from '$app/navigation'
 
-  let funnel
   let email
-  let currentStep
-  let nextStep
+  let funnel
 
   const start = async () => {
     funnel = await loadFunnel()
 
     email = funnel.email
 
-    currentStep =
+    const currentStep =
       funnel.steps
         .filter((step) => step.url === $page.path)
         .reduce((step) => step)
@@ -23,7 +21,7 @@
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
 
-    nextStep = funnel.steps[nextStepIndex]
+    const nextStep = funnel.steps[nextStepIndex]
 
     funnel.on('email.set', async () => {
       await goto(nextStep.url)
