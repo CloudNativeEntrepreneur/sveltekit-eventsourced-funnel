@@ -6,12 +6,18 @@
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-    "format": "prettier --write --plugin-search-dir=. ."
+    "format": "prettier --write --plugin-search-dir=. .",
+    "test": "DEBUG=tests* jest --no-cache --config ./jest.json --coverage --verbose",
+    "test:watch": "DEBUG=tests* jest --config jest.json --watch --coverage --verbose"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.8",
     "@sveltejs/kit": "next",
     "autoprefixer": "10.3.1",
+    "babel-jest": "^26.6.3",
     "cssnano": "5.0.7",
+    "dainte": "^0.1.5",
     "debug": "4.3.2",
     "eslint": "7.31.0",
     "eslint-config-prettier": "8.3.0",

@@ -37,13 +37,8 @@ export class Funnel extends Entity {
     this.enqueue('steps.configured', this, steps)
   }
 
-  addStep(step) {
-    this.steps.push(step)
-    this.digest('addStep', step)
-    this.enqueue('step.added', this, step)
-  }
-
   setCurrentStep(stepUrl) {
+    if (! this.steps.length) throw new Error('Cannot set current step when steps are not configured')
     if (this.currentStep === stepUrl) return
     this.currentStep = stepUrl
     this.digest('setCurrentStep', stepUrl)

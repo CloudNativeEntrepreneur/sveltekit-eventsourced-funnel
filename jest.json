@@ -1,0 +1,24 @@
+{
+  "roots": ["<rootDir>/src", "<rootDir>/__tests__/unit"],
+  "testEnvironment": "node",
+  "modulePaths": ["<rootDir>/src"],
+  "moduleDirectories": ["node_modules"],
+  "transform": {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.svelte$": "svelte-jester"
+  },
+  "moduleFileExtensions": ["js", "svelte"],
+  "moduleNameMapper": {
+    "^\\$lib(.*)$": "<rootDir>/src/lib$1"
+  },
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    }
+  },
+  "collectCoverageFrom": ["src/**/*.{js,jsx,mjs}"],
+  "testTimeout": 30000
+}
