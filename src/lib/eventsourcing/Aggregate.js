@@ -1,7 +1,8 @@
 import cloneDeep from 'lodash.clonedeep'
-import { EventEmitter } from 'eventemitter3'
+import events from 'eventemitter3'
 import debug from 'debug'
 
+const { EventEmitter } = events
 const log = debug('event-sourcing')
 
 /**

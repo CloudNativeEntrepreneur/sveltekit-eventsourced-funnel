@@ -1,6 +1,7 @@
-import { EventEmitter } from 'eventemitter3'
+import events from 'eventemitter3'
 import { writable, get } from 'svelte/store'
 
+const { EventEmitter } = events
 const log = console.log
 
 export class Repository extends EventEmitter {
