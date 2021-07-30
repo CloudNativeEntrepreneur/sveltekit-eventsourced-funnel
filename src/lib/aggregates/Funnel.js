@@ -1,6 +1,5 @@
 import { Aggregate } from '$lib/eventsourcing'
 import { v4 as uuid } from 'uuid'
-import { FunnelStep } from './FunnelStep'
 
 export class Funnel extends Aggregate {
   constructor(snapshot, events) {
@@ -37,14 +36,12 @@ export class Funnel extends Aggregate {
   }
 
   configureSteps(steps) {
-    const funnelSteps = steps.map((step) => new FunnelStep(step))
-    this.steps = funnelSteps
+    this.steps = steps
     this.digest('configureSteps', steps)
-    this.enqueue('steps.configured', this, funnelSteps)
+    this.enqueue('steps.configured', this, steps)
   }
 
   addStep(step) {
-    step = new FunnelStep(step)
     this.steps.push(step)
     this.digest('addStep', step)
     this.enqueue('step.added', this, step)

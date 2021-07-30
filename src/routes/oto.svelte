@@ -3,6 +3,7 @@
   import { loadFunnel } from '$lib/loadFunnel'
   import { page } from '$app/stores'
   import { funnelRepository } from '$lib/funnelRepository'
+  import { FunnelStep } from '$lib/entities/FunnelStep'
   // import { goto } from '$app/navigation'
 
   let funnel
@@ -15,12 +16,13 @@
 
     email = funnel.email
 
-    currentStep = funnel.steps
+    currentStep = new FunnelStep(
+      funnel.steps
       .filter((step) => step.url === $page.path)
-      .reduce((step) => step)
+      .reduce((step) => step))
 
     const nextStepIndex = funnel.steps.map(e => e.url).indexOf(currentStep.url) + 1
-    nextStep = funnel.steps[nextStepIndex]
+    nextStep = new FunnelStep(funnel.steps[nextStepIndex])
 
     currentStep.on('entered', async () => {
       funnel.setCurrentStep(currentStep.url)

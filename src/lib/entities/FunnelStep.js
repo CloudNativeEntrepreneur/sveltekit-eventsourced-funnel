@@ -1,8 +1,8 @@
-import { Aggregate } from '$lib/eventsourcing'
+import { EventEmitter } from 'eventemitter3'
 import { v4 as uuid } from 'uuid'
 
-export class FunnelStep extends Aggregate {
-  constructor(snapshot, events) {
+export class FunnelStep extends EventEmitter {
+  constructor(snapshot) {
     super()
 
     this.entered = false
@@ -11,7 +11,7 @@ export class FunnelStep extends Aggregate {
     this.submitted = false
     this.submittedData = {}
 
-    this.rehydrate(snapshot, events)
+    Object.assign(this, snapshot)
   }
 
   initialize({ id, url, name, onSubmit }) {
@@ -19,14 +19,14 @@ export class FunnelStep extends Aggregate {
     this.url = url
     this.name = name
     this.onSubmit = onSubmit
-    this.digest('initialize', id)
+    
     this.emit('initialized', this)
   }
 
   submit(data) {
     this.submitted = true
     this.submittedData = data
-    this.digest('submit', data)
+
     this.emit('submitted', this)
   }
 
@@ -42,7 +42,6 @@ export class FunnelStep extends Aggregate {
     }
     this.session = uuid()
 
-    this.digest('enter')
     this.emit('entered', this)
   }
 }
