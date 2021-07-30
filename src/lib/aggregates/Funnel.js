@@ -6,11 +6,17 @@ export class Funnel extends Aggregate {
   constructor(snapshot, events) {
     super()
 
+    // analytics
     this.session = ''
+
+    // data to collect
     this.user = ''
     this.creditCard = ''
+
+    // steps
     this.steps = []
-    this.initialStep = 0
+
+    // funnel state
     this.entered = false
     this.currentStep = null
     this.orderBump = false
@@ -28,23 +34,31 @@ export class Funnel extends Aggregate {
   initialize(id) {
     this.id = id
     this.digest('initialize', id)
-    this.emit('initialized', this)
+    this.enqueue('initialized', this)
   }
 
   configureSteps(steps) {
     console.log('configuring steps')
     let funnelSteps = steps.map(step => new FunnelStep(step))
-    console.log(funnelSteps)
+    console.log({ funnelSteps })
     this.steps = funnelSteps
     this.digest('configureSteps', steps)
-    this.emit('steps.configured', this)
+    this.enqueue('steps.configured', this, funnelSteps)
   }
 
   addStep(step) {
     step = new FunnelStep(step)
     this.steps.push(step)
     this.digest('addStep', step)
-    this.emit('step.added', this, step)
+    this.enqueue('step.added', this, step)
+  }
+
+  setCurrentStep(stepUrl) {
+    if (this.currentStep === stepUrl) return;
+    this.currentStep = stepUrl
+
+    this.digest('setCurrentStep', stepUrl)
+    this.enqueue('currentStep.set', this, stepUrl)
   }
 
   enter() {
@@ -56,18 +70,16 @@ export class Funnel extends Aggregate {
     } else {
       console.log('Welcome to the funnel!')
       this.entered = true
-      this.currentStep = this.initialStep
-      this.nextStep = this.currentStep + 1
     }
     this.session = uuid()
 
     this.digest('enter')
-    this.emit('entered', this)
+    this.enqueue('entered', this)
   }
 
   exit() {
     this.complete = true
     this.digest('exit')
-    this.digest('exited')
+    this.enqueue('exited', this)
   }
 }
