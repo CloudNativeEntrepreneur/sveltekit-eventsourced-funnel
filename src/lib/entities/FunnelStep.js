@@ -19,7 +19,7 @@ export class FunnelStep extends EventEmitter {
     this.url = url
     this.name = name
     this.onSubmit = onSubmit
-    
+
     this.emit('initialized', this)
   }
 

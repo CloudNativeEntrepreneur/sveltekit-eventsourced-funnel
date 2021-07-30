@@ -28,16 +28,18 @@
     currentStep = new FunnelStep(
       funnel.steps
         .filter((step) => step.url === $page.path)
-        .reduce((step) => step))
+        .reduce((step) => step)
+    )
 
-    const nextStepIndex = funnel.steps.map(e => e.url).indexOf(currentStep.url) + 1
+    const nextStepIndex =
+      funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
     nextStep = new FunnelStep(funnel.steps[nextStepIndex])
 
     currentStep.on('entered', async () => {
       await funnel.setCurrentStep(currentStep.url)
       await funnelRepository.commit(funnel)
     })
-    
+
     currentStep.on('submitted', async ({ submittedData }) => {
       console.log('submitted!')
       const { email } = submittedData
