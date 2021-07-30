@@ -24,8 +24,8 @@
       .filter((step) => step.url === $page.path)
       .reduce((step) => step)
 
-    await funnel.setCurrentStep(currentStep.url)
-    await funnel.complete()
+    funnel.setCurrentStep(currentStep.url)
+    funnel.complete()
     await funnelRepository.commit(funnel)
   }
 

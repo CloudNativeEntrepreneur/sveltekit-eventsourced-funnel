@@ -30,7 +30,7 @@
       await goto(finalStep.url)
     })
 
-    await funnel.setCurrentStep(currentStep.url)
+    funnel.setCurrentStep(currentStep.url)
     await funnelRepository.commit(funnel)
   }
 
@@ -39,12 +39,12 @@
   }
 
   const yes = async () => {
-    await funnel.acceptDownsell()
+    funnel.acceptDownsell()
     await funnelRepository.commit(funnel)
   }
 
   const no = async () => {
-    await funnel.declineDownsell()
+    funnel.declineDownsell()
     await funnelRepository.commit(funnel)
   }
 </script>

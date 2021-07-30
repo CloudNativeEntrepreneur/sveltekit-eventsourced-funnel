@@ -33,7 +33,7 @@
       await goto(finalStep.url)
     })
 
-    await funnel.setCurrentStep(currentStep.url)
+    funnel.setCurrentStep(currentStep.url)
     await funnelRepository.commit(funnel)
   }
 
@@ -42,12 +42,12 @@
   }
 
   const yes = async () => {
-    await funnel.acceptOTO()
+    funnel.acceptOTO()
     await funnelRepository.commit(funnel)
   }
 
   const no = async () => {
-    await funnel.declineOTO()
+    funnel.declineOTO()
     await funnelRepository.commit(funnel)
   }
 </script>

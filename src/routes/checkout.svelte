@@ -27,7 +27,7 @@
       await goto(nextStep.url)
     })
 
-    await funnel.setCurrentStep(currentStep.url)
+    funnel.setCurrentStep(currentStep.url)
     await funnelRepository.commit(funnel)
   }
 
@@ -36,7 +36,7 @@
   }
 
   const submit = async () => {
-    await funnel.checkout({ creditCard })
+    funnel.checkout({ creditCard })
     await funnelRepository.commit(funnel)
   }
 </script>
