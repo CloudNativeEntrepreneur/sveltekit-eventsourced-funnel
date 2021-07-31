@@ -7,11 +7,13 @@
 
   let email
   let funnel
+  let loadingFunnel = true
 
   const start = async () => {
     funnel = await load()
 
     email = funnel.email
+    loadingFunnel = false
 
     const currentStep = funnel.steps
       .filter((step) => step.url === $page.path)
@@ -48,9 +50,8 @@
 
 <p>How about this instead, {email}?</p>
 
-<button class="yes" on:click|preventDefault={yes}> Ok, Let's do that! </button>
-
-<button class="no" on:click|preventDefault={no}> Still, No thanks </button>
+<button class="yes" on:click|preventDefault={yes} disabled="{loadingFunnel}"> Ok, Let's do that! </button>
+<button class="no" on:click|preventDefault={no} disabled="{loadingFunnel}"> Still, No thanks </button>
 
 <style>
   button {

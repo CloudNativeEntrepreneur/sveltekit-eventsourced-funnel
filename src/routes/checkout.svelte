@@ -8,11 +8,13 @@
   let creditCard
   let email
   let funnel
+  let loadingFunnel = true
 
   const start = async () => {
     funnel = await load()
 
     email = funnel.email
+    loadingFunnel = false
 
     const currentStep = funnel.steps
       .filter((step) => step.url === $page.path)
@@ -46,5 +48,5 @@
     Credit Card #
     <input name="creditCard" type="text" bind:value={creditCard} required />
   </label>
-  <input type="submit" />
+  <input type="submit" disabled="{loadingFunnel}" />
 </form>

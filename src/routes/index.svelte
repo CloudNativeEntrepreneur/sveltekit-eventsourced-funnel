@@ -7,11 +7,13 @@
 
   let email
   let funnel
+  let loadingFunnel = true
 
   const start = async () => {
     funnel = await load()
 
     email = funnel.email
+    loadingFunnel = false
 
     const currentStep = funnel.steps
       .filter((step) => step.url === $page.path)
@@ -40,5 +42,5 @@
     E-mail
     <input name="email" type="text" bind:value={email} required />
   </label>
-  <input type="submit" />
+  <input type="submit" disabled="{loadingFunnel}" />
 </form>

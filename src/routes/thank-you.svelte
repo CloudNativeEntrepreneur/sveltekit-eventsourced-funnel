@@ -10,6 +10,7 @@
   let upsell
   let downsell
   let funnel
+  let loadingFunnel = true
 
   const start = async () => {
     funnel = await load()
@@ -19,6 +20,7 @@
     creditCard = funnel.creditCard
     upsell = funnel.upsell
     downsell = funnel.downsell
+    loadingFunnel = false
 
     const currentStep = funnel.steps
       .filter((step) => step.url === $page.path)
