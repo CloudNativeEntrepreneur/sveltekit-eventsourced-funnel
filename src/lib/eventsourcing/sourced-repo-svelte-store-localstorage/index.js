@@ -1,5 +1,6 @@
 import events from 'eventemitter3'
-import { writable, get } from 'svelte/store'
+import { get } from 'svelte/store'
+import { writable as writeableWithLocalStorage } from 'svelte-local-storage-store'
 
 const { EventEmitter } = events
 const log = console.log
@@ -23,51 +24,13 @@ export class Repository extends EventEmitter {
 
     // snapshot store setup
     const snapshotsKey = `${EntityType.name}.snapshots`
-
-    // load snapshots from local storage
-    let localSnapshots
-    if (typeof localStorage !== 'undefined') {
-      localSnapshots = JSON.parse(localStorage.getItem(snapshotsKey))
-      if (localSnapshots) log('Found local snapshots', localSnapshots)
-    }
-
-    const snapshots = writable(localSnapshots || [])
+    const snapshots = writeableWithLocalStorage(snapshotsKey, [])
     this.snapshots = snapshots
-
-    this.subscribedToSnapshots = false
-    this.snapshots.subscribe((value) => {
-      if (!this.subscribedToSnapshots) {
-        this.subscribedToSnapshots = true
-      } else {
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem(snapshotsKey, JSON.stringify(value))
-        }
-      }
-    })
 
     // event store setup
     const eventsKey = `${EntityType.name}.events`
-
-    // load events from local storage
-    let localEvents
-    if (typeof localStorage !== 'undefined') {
-      localEvents = JSON.parse(localStorage.getItem(eventsKey))
-      if (localEvents) log('Found local events', localEvents)
-    }
-
-    const events = writable(localEvents || [])
+    const events = writeableWithLocalStorage(eventsKey, [])
     this.events = events
-
-    this.subscribedToEvents = false
-    this.events.subscribe((value) => {
-      if (!this.subscribedToEvents) {
-        this.subscribedToEvents = true
-      } else {
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem(eventsKey, JSON.stringify(value))
-        }
-      }
-    })
 
     log(`initialized ${this.EntityType.name} entity store`)
 
@@ -158,8 +121,7 @@ export class Repository extends EventEmitter {
         })
       })
 
-      const previousEvents = get(this.events)
-      this.events.set([...previousEvents, ...newEvents])
+      this.events.update((previousEvents) => [...previousEvents, ...newEvents])
       entity.newEvents = []
 
       log(`committed ${this.EntityType.name}.events for id ${entity.id}`)
@@ -177,8 +139,11 @@ export class Repository extends EventEmitter {
         entity.version >= entity.snapshotVersion + self.snapshotFrequency
       ) {
         const snapshot = entity.snapshot()
-        const snapshots = get(this.snapshots)
-        this.snapshots.set([snapshot, ...snapshots])
+        // put new one at the beginning for premptive sorting
+        this.snapshots.update((previousSnapshots) => [
+          snapshot,
+          ...previousSnapshots
+        ])
 
         log(
           `committed ${self.EntityType.name}.snapshot for id ${entity.id}`,

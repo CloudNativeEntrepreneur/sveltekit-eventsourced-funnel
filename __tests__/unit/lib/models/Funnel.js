@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals'
+import { expect, it, describe, beforeEach, jest } from '@jest/globals'
 import { Funnel } from '$lib/models/Funnel'
 
 // const steps defined below tests - looked too messy at the top
@@ -41,7 +41,7 @@ describe('Funnel model', () => {
     funnel.acceptOTO()
     expect(funnel.oto).toEqual(true)
 
-    const creditCard = "4242424242424242"
+    const creditCard = '4242424242424242'
     funnel.checkout({ creditCard })
     expect(funnel.creditCard).toEqual(creditCard)
 
@@ -66,7 +66,9 @@ describe('Funnel model', () => {
     try {
       funnel.setCurrentStep('/')
     } catch (err) {
-      expect(err).toEqual(new Error('Cannot set current step when steps are not configured'))
+      expect(err).toEqual(
+        new Error('Cannot set current step when steps are not configured')
+      )
     }
   })
 
@@ -86,12 +88,12 @@ describe('Funnel model', () => {
     expect(currentStep.name).toBe('Lead Magnet')
     expect(nextStep.name).toBe('One Time Offer')
   })
-  
+
   it('should dedupe setting current path', () => {
     funnel.configureSteps(steps)
     funnel.setCurrentStep('/')
     expect(funnel.eventsToEmit.length).toEqual(2)
-    
+
     funnel.setCurrentStep('/')
     funnel.setCurrentStep('/')
     funnel.setCurrentStep('/')
@@ -99,7 +101,6 @@ describe('Funnel model', () => {
     funnel.setCurrentStep('/')
     funnel.setCurrentStep('/')
     expect(funnel.eventsToEmit.length).toEqual(2)
-
   })
 
   it('should enter funnel', () => {
@@ -107,7 +108,7 @@ describe('Funnel model', () => {
     expect(funnel.entered).toEqual(true)
     expect(funnel.session).toEqual(expect.any(String))
   })
-  
+
   it('should reenter funnel', () => {
     funnel.enter()
     expect(funnel.entered).toEqual(true)
@@ -119,7 +120,7 @@ describe('Funnel model', () => {
     expect(funnel.session).toEqual(expect.any(String))
     expect(funnel.session).not.toEqual(firstSession)
   })
-  
+
   it('should set email', () => {
     const email = 'test@cloudnativeentrepreneur.com'
     funnel.setEmail(email)
@@ -130,14 +131,14 @@ describe('Funnel model', () => {
     funnel.acceptOTO()
     expect(funnel.oto).toEqual(true)
   })
-  
+
   it('should decline OTO', () => {
     funnel.declineOTO()
     expect(funnel.oto).toEqual(false)
   })
 
   it('should checkout with credit card', () => {
-    const creditCard = "4242424242424242"
+    const creditCard = '4242424242424242'
     funnel.checkout({ creditCard })
     expect(funnel.creditCard).toEqual(creditCard)
   })
@@ -146,17 +147,17 @@ describe('Funnel model', () => {
     funnel.acceptUpsell()
     expect(funnel.upsell).toEqual(true)
   })
-  
+
   it('should decline the upsell', () => {
     funnel.declineUpsell()
     expect(funnel.upsell).toEqual(false)
   })
-  
+
   it('should accept the downsell', () => {
     funnel.acceptDownsell()
     expect(funnel.downsell).toEqual(true)
   })
-  
+
   it('should accept the downsell', () => {
     funnel.declineDownsell()
     expect(funnel.downsell).toEqual(false)
@@ -166,7 +167,7 @@ describe('Funnel model', () => {
     funnel.complete()
     expect(funnel.completed).toEqual(true)
   })
-  
+
   it('should dedupe completed', () => {
     funnel.complete()
     expect(funnel.completed).toEqual(true)
