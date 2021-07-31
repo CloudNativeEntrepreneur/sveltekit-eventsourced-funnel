@@ -2,8 +2,8 @@
   "name": "sveltekit-eventsourced-funnel",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
+    "dev": "TAILWIND_MODE=watch svelte-kit dev",
+    "build": "TAILWIND_MODE=build svelte-kit build",
     "preview": "svelte-kit preview",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
