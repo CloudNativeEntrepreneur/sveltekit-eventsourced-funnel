@@ -1,5 +1,5 @@
 <script>
-  import { browser } from '$app/env'
+  import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { load } from '$lib/funnel'
@@ -31,14 +31,12 @@
     await funnelRepository.commit(funnel)
   }
 
-  if (browser) {
-    start()
-  }
-
   const submit = async () => {
     funnel.checkout({ creditCard })
     await funnelRepository.commit(funnel)
   }
+
+  onMount(start)
 </script>
 
 <h1>Checkout</h1>

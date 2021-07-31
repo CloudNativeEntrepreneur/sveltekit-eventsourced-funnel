@@ -1,5 +1,5 @@
 <script>
-  import { browser } from '$app/env'
+  import { onMount } from 'svelte'
   import { load } from '$lib/funnel'
   import { page } from '$app/stores'
   import { funnelRepository } from '$lib/repositories/funnelRepository'
@@ -29,9 +29,7 @@
     await funnelRepository.commit(funnel)
   }
 
-  if (browser) {
-    start()
-  }
+  onMount(start)
 </script>
 
 <h1>Thanks!</h1>

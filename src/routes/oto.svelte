@@ -1,5 +1,5 @@
 <script>
-  import { browser } from '$app/env'
+  import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { load } from '$lib/funnel'
@@ -37,10 +37,6 @@
     await funnelRepository.commit(funnel)
   }
 
-  if (browser) {
-    start()
-  }
-
   const yes = async () => {
     funnel.acceptOTO()
     await funnelRepository.commit(funnel)
@@ -50,6 +46,8 @@
     funnel.declineOTO()
     await funnelRepository.commit(funnel)
   }
+
+  onMount(start)
 </script>
 
 <h1>One time offer!</h1>
