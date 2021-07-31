@@ -17,13 +17,8 @@
       .filter((step) => step.url === $page.path)
       .reduce((step) => step)
 
-    const nextStepIndex =
-      funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
-
-    const nextStep = funnel.steps[nextStepIndex]
-
     funnel.on('email.set', async () => {
-      await goto(nextStep.url)
+      await goto(currentStep.nextStep)
     })
 
     funnel.setCurrentStep(currentStep.url)

@@ -17,17 +17,14 @@
       .filter((step) => step.url === $page.path)
       .reduce((step) => step)
 
-    // only step left
-    const finalStep = funnel.steps[funnel.steps.length - 1]
-
     // if accepted, go to final step
     funnel.on('downsell.accepted', async () => {
-      await goto(finalStep.url)
+      await goto(currentStep.nextStepYes)
     })
 
     // if declined, send to the downsell
     funnel.on('downsell.declined', async () => {
-      await goto(finalStep.url)
+      await goto(currentStep.nextStepNo)
     })
 
     funnel.setCurrentStep(currentStep.url)

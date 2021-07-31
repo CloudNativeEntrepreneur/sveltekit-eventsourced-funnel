@@ -17,20 +17,14 @@
       .filter((step) => step.url === $page.path)
       .reduce((step) => step)
 
-    const nextStepIndex =
-      funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
-
-    const nextStep = funnel.steps[nextStepIndex]
-    const finalStep = funnel.steps[funnel.steps.length - 1]
-
     // if accepted, go to next step
     funnel.on('oto.accepted', async () => {
-      await goto(nextStep.url)
+      await goto(currentStep.nextStepYes)
     })
 
     // if declined, send to the end
     funnel.on('oto.declined', async () => {
-      await goto(finalStep.url)
+      await goto(currentStep.nextStepNo)
     })
 
     funnel.setCurrentStep(currentStep.url)
