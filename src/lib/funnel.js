@@ -21,8 +21,8 @@ export const load = () => {
     try {
       funnel = await funnelRepository.get('session')
     } catch (err) {
-      console.error(err)
-      throw err
+      console.error('Error getting from the funnel repository:', err)
+      return reject(err)
     }
 
     if (!funnel) {
@@ -39,8 +39,8 @@ export const load = () => {
     try {
       await funnelRepository.commit(funnel)
     } catch (err) {
-      console.error(err)
-      throw err
+      console.error('Error commiting to the funnel repository:', err)
+      return reject(err)
     }
 
     return resolve(funnel)

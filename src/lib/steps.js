@@ -1,3 +1,6 @@
+// The order of the array is the order of the funnel
+// might refactor to be more linked-list-y by url with
+// yes and no responses baked in.
 export const steps = [
   {
     url: '/',
