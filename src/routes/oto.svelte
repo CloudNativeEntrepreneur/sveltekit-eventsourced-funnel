@@ -16,8 +16,7 @@
     loadingFunnel = false
 
     const currentStep = funnel.steps
-      .filter((step) => step.url === $page.path)
-      .reduce((step) => step)
+      .find(step => step.url === $page.path)
 
     // if accepted, go to next step
     funnel.on('oto.accepted', async () => {

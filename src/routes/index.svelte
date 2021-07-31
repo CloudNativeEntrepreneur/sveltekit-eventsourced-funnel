@@ -16,8 +16,7 @@
     loadingFunnel = false
 
     const currentStep = funnel.steps
-      .filter((step) => step.url === $page.path)
-      .reduce((step) => step)
+      .find(step => step.url === $page.path)
 
     funnel.on('email.set', async () => {
       await goto(currentStep.nextStep)

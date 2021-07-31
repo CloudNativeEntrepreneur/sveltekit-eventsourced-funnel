@@ -20,8 +20,7 @@ describe('Funnel model', () => {
     funnel.setCurrentStep('/')
 
     const currentStep = funnel.steps
-      .filter((step) => step.url === funnel.currentStep)
-      .reduce((step) => step)
+      .find(step => step.url === funnel.currentStep)
 
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
@@ -77,8 +76,7 @@ describe('Funnel model', () => {
     funnel.setCurrentStep('/')
 
     const currentStep = funnel.steps
-      .filter((step) => step.url === funnel.currentStep)
-      .reduce((step) => step)
+      .find(step => step.url === funnel.currentStep)
 
     const nextStepIndex =
       funnel.steps.map((e) => e.url).indexOf(currentStep.url) + 1
