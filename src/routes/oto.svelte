@@ -15,8 +15,7 @@
     email = funnel.email
     loadingFunnel = false
 
-    const currentStep = funnel.steps
-      .find(step => step.url === $page.path)
+    const currentStep = funnel.steps.find((step) => step.url === $page.path)
 
     // if accepted, go to next step
     funnel.on('oto.accepted', async () => {
@@ -49,8 +48,12 @@
 
 <p>Thanks for signing up {email}</p>
 
-<button class="yes" on:click|preventDefault={yes} disabled="{loadingFunnel}"> Buy One time offer! </button>
-<button class="no" on:click|preventDefault={no} disabled="{loadingFunnel}"> No thanks </button>
+<button class="yes" on:click|preventDefault={yes} disabled={loadingFunnel}>
+  Buy One time offer!
+</button>
+<button class="no" on:click|preventDefault={no} disabled={loadingFunnel}>
+  No thanks
+</button>
 
 <style>
   button {

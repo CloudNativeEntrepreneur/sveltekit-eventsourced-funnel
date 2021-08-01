@@ -32,9 +32,9 @@
     "prettier-config-standard": "4.0.0",
     "prettier-plugin-svelte": "2.3.1",
     "sourced": "3.0.0",
+    "sourced-repo-svelte-local-storage-store": "1.0.0",
     "svelte": "3.41.0",
     "svelte-jester": "1.7.0",
-    "svelte-local-storage-store": "0.2.3",
     "svelte-preprocess": "4.7.4",
     "tailwindcss": "2.2.7",
     "uuid": "8.3.2"

@@ -22,8 +22,7 @@
     downsell = funnel.downsell
     loadingFunnel = false
 
-    const currentStep = funnel.steps
-      .find(step => step.url === $page.path)
+    const currentStep = funnel.steps.find((step) => step.url === $page.path)
 
     funnel.setCurrentStep(currentStep.url)
     funnel.complete()

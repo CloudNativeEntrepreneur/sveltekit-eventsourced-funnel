@@ -16,8 +16,7 @@
     email = funnel.email
     loadingFunnel = false
 
-    const currentStep = funnel.steps
-      .find(step => step.url === $page.path)
+    const currentStep = funnel.steps.find((step) => step.url === $page.path)
 
     funnel.on('checkout.completed', async () => {
       await goto(currentStep.nextStep)
@@ -47,5 +46,5 @@
     Credit Card #
     <input name="creditCard" type="text" bind:value={creditCard} required />
   </label>
-  <input type="submit" disabled="{loadingFunnel}" />
+  <input type="submit" disabled={loadingFunnel} />
 </form>

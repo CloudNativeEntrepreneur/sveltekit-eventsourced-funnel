@@ -1,4 +1,4 @@
-import { Value } from "sourced"
+import { Value } from 'sourced'
 
 // declared backwards so they can reference eachother
 const thankyou = Value({

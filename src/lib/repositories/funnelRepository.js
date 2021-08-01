@@ -1,5 +1,5 @@
+import { Repository } from 'sourced-repo-svelte-local-storage-store'
 import { Funnel } from '$lib/models/Funnel'
-import { Repository } from '$lib/eventsourcing/sourced-repo-svelte-store-localstorage'
 import { browser } from '$app/env'
 
 let repository

@@ -15,8 +15,7 @@
     email = funnel.email
     loadingFunnel = false
 
-    const currentStep = funnel.steps
-      .find(step => step.url === $page.path)
+    const currentStep = funnel.steps.find((step) => step.url === $page.path)
 
     // if accepted, go to final step
     funnel.on('downsell.accepted', async () => {
@@ -49,8 +48,12 @@
 
 <p>How about this instead, {email}?</p>
 
-<button class="yes" on:click|preventDefault={yes} disabled="{loadingFunnel}"> Ok, Let's do that! </button>
-<button class="no" on:click|preventDefault={no} disabled="{loadingFunnel}"> Still, No thanks </button>
+<button class="yes" on:click|preventDefault={yes} disabled={loadingFunnel}>
+  Ok, Let's do that!
+</button>
+<button class="no" on:click|preventDefault={no} disabled={loadingFunnel}>
+  Still, No thanks
+</button>
 
 <style>
   button {

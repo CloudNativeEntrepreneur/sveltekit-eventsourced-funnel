@@ -15,8 +15,7 @@
     email = funnel.email
     loadingFunnel = false
 
-    const currentStep = funnel.steps
-      .find(step => step.url === $page.path)
+    const currentStep = funnel.steps.find((step) => step.url === $page.path)
 
     funnel.on('email.set', async () => {
       await goto(currentStep.nextStep)
@@ -41,5 +40,5 @@
     E-mail
     <input name="email" type="text" bind:value={email} required />
   </label>
-  <input type="submit" disabled="{loadingFunnel}" />
+  <input type="submit" disabled={loadingFunnel} />
 </form>
