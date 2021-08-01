@@ -1,4 +1,4 @@
-import { Entity } from '$lib/eventsourcing/sourced'
+import { Entity } from 'sourced'
 import { v4 as uuid } from 'uuid'
 
 export class Funnel extends Entity {

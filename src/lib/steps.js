@@ -1,39 +1,39 @@
-import { ValueObject } from "./eventsourcing/sourced"
+import { Value } from "sourced"
 
 // declared backwards so they can reference eachother
-const thankyou = ValueObject({
+const thankyou = Value({
   url: '/thank-you',
   name: 'Thank You'
 })
 
-const downsell = ValueObject({
+const downsell = Value({
   url: '/downsell',
   name: 'Downsell',
   nextStepYes: thankyou.url,
   nextStepNo: thankyou.url
 })
 
-const upsell = ValueObject({
+const upsell = Value({
   url: '/upsell',
   name: 'Upsell',
   nextStepYes: thankyou.url,
   nextStepNo: downsell.url
 })
 
-const checkout = ValueObject({
+const checkout = Value({
   url: '/checkout',
   name: 'Checkout',
   nextStep: upsell.url
 })
 
-const oto = ValueObject({
+const oto = Value({
   url: '/oto',
   name: 'One Time Offer',
   nextStepYes: checkout.url,
   nextStepNo: thankyou.url
 })
 
-const leadMagnet = ValueObject({
+const leadMagnet = Value({
   url: '/',
   name: 'Lead Magnet',
   nextStep: oto.url

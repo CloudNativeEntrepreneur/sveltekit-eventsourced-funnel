@@ -31,6 +31,7 @@
     "prettier": "2.3.2",
     "prettier-config-standard": "4.0.0",
     "prettier-plugin-svelte": "2.3.1",
+    "sourced": "3.0.0",
     "svelte": "3.41.0",
     "svelte-jester": "1.7.0",
     "svelte-local-storage-store": "0.2.3",
