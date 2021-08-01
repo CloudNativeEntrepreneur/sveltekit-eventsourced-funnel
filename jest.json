@@ -19,6 +19,6 @@
       "statements": 100
     }
   },
-  "collectCoverageFrom": ["src/**/*.{js,jsx,mjs}"],
+  "collectCoverageFrom": ["src/**/*.{js,jsx,mjs,svelte}"],
   "testTimeout": 30000
 }
