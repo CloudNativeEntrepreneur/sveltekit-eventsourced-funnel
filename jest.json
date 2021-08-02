@@ -4,13 +4,18 @@
   "modulePaths": ["<rootDir>/src"],
   "moduleDirectories": ["node_modules"],
   "transform": {
-    "^.+\\.js$": "babel-jest",
-    "^.+\\.svelte$": "svelte-jester"
+    "^.+\\.svelte$": "svelte-jester",
+    "^.+\\.(ts|tsx|js|jsx)$":  ["esbuild-jest"]
   },
   "moduleFileExtensions": ["js", "svelte"],
   "moduleNameMapper": {
-    "^\\$lib(.*)$": "<rootDir>/src/lib$1"
+    "^\\$app(.*)$": "<rootDir>/.svelte-kit/dev/runtime/app$1",
+    "^\\$lib(.*)$": "<rootDir>/src/lib$1",
+    "^\\$routes(.*)$": "<rootDir>/src/routes$1"
   },
+  "setupFilesAfterEnv": [
+    "@testing-library/jest-dom/extend-expect"
+  ],
   "coverageThreshold": {
     "global": {
       "branches": 100,
