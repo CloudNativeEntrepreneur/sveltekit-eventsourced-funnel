@@ -23,3 +23,9 @@ Each page loads the `funnel` instance `onMount`, which is client side only. The 
 Once commits are successful, `enqueued` events fire, and we can navigate the user to their next step.
 
 Project bootstrapped with [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+
+## Further Reading
+
+`sourced` has been around for several years for build event sourced models for backend services. This means with `sourced` you can build your "model" microservices in the same way you build your front end models.
+
+* https://hackernoon.com/complicated-patterns-arent-always-that-complicated-usually-it-s-the-simple-ones-that-bite-you-caf870f2bf03
