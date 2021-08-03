@@ -1,5 +1,8 @@
 # sveltekit-eventsourced-funnel
 
+[![Node.js CI](https://github.com/CloudNativeEntrepreneur/sveltekit-eventsourced-funnel/actions/workflows/node.js.yml/badge.svg)](https://github.com/CloudNativeEntrepreneur/sveltekit-eventsourced-funnel/actions/workflows/node.js.yml)
+[![codecov](https://codecov.io/gh/cloudnativeentrepreneur/sveltekit-eventsourced-funnel/branch/master/graph/badge.svg?token=gOPgg2Qtmq)](https://codecov.io/gh/cloudnativeentrepreneur/sveltekit-eventsourced-funnel)
+
 Example of building a SvelteKit project with event sourcing.
 
 Demonstrates:
