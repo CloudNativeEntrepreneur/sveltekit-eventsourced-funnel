@@ -27,7 +27,6 @@ module.exports = {
     afterAll: true
   },
   rules: {
-    'import/first': 'off', // this doesnt play nice with .svelte files
-    'no-async-promise-executor': 'off'
+    'import/first': 'off' // this doesnt play nice with .svelte files
   }
 }

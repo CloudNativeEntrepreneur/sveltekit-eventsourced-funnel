@@ -15,34 +15,32 @@ import { steps } from '$lib/steps'
  * It's a singleton with some initialization logic.
  *
  */
-export const load = () => {
-  return new Promise(async (resolve, reject) => {
-    let funnel
-    try {
-      funnel = await funnelRepository.get('session')
-    } catch (err) {
-      console.error('Error getting from the funnel repository:', err)
-      return reject(err)
-    }
+export const load = async () => {
+  let funnel
+  try {
+    funnel = await funnelRepository.get('session')
+  } catch (err) {
+    console.error('Error getting from the funnel repository:', err)
+    throw err
+  }
 
-    if (!funnel) {
-      funnel = new Funnel()
-      funnel.initialize('session')
-      funnel.configureSteps(steps)
-      funnel.enter()
-    }
+  if (!funnel) {
+    funnel = new Funnel()
+    funnel.initialize('session')
+    funnel.configureSteps(steps)
+    funnel.enter()
+  }
 
-    // it's ok to commit without changes
-    // and, if using sourced-queued-repo, releases the lock created by the get
-    // we are not in this project, but that possibility makes it good practice
-    // to get then commit.
-    try {
-      await funnelRepository.commit(funnel)
-    } catch (err) {
-      console.error('Error commiting to the funnel repository:', err)
-      return reject(err)
-    }
+  // it's ok to commit without changes
+  // and, if using sourced-queued-repo, releases the lock created by the get
+  // we are not in this project, but that possibility makes it good practice
+  // to get then commit.
+  try {
+    await funnelRepository.commit(funnel)
+  } catch (err) {
+    console.error('Error commiting to the funnel repository:', err)
+    throw err
+  }
 
-    return resolve(funnel)
-  })
+  return funnel
 }
