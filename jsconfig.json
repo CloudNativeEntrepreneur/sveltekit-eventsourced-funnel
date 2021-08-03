@@ -5,7 +5,7 @@
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "$routes": ["src/routes"],
-      "$routes/*": ["src/routes/*"],
+      "$routes/*": ["src/routes/*"]
     }
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"]

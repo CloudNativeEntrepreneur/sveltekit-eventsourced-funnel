@@ -3,12 +3,13 @@
 Example of building a SvelteKit project with event sourcing.
 
 Demonstrates:
+
 1. POJOs for event sourced models
 2. Repository pattern for persistence via local storage
 
 As with Redux, the logic is external to the components. You can easily hook into every event for analytics and more. See unit test of the "`Funnel` model" to see that the logic can be tested independently of the UI.
 
-Includes Tailwind with JIT compiler for easy copy and pasting of UIs from [Tails](https://devdojo.com/tails), [TailwindUI](https://tailwindui.com/), [Shuffle](https://shuffle.dev/), or etc. 
+Includes Tailwind with JIT compiler for easy copy and pasting of UIs from [Tails](https://devdojo.com/tails), [TailwindUI](https://tailwindui.com/), [Shuffle](https://shuffle.dev/), or etc.
 
 ## Quick Walkthrough
 
@@ -28,4 +29,4 @@ Project bootstrapped with [`create-svelte`](https://github.com/sveltejs/kit/tree
 
 `sourced` has been around for several years for building event sourced models for backend services. This means with `sourced` you can build your "model" microservices in the same way you build your front end models.
 
-* https://hackernoon.com/complicated-patterns-arent-always-that-complicated-usually-it-s-the-simple-ones-that-bite-you-caf870f2bf03
+- https://hackernoon.com/complicated-patterns-arent-always-that-complicated-usually-it-s-the-simple-ones-that-bite-you-caf870f2bf03

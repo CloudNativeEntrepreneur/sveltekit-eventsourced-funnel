@@ -5,7 +5,7 @@
   "moduleDirectories": ["node_modules"],
   "transform": {
     "^.+\\.svelte$": "svelte-jester",
-    "^.+\\.(ts|tsx|js|jsx)$":  ["esbuild-jest"]
+    "^.+\\.(ts|tsx|js|jsx)$": ["esbuild-jest"]
   },
   "moduleFileExtensions": ["js", "svelte"],
   "moduleNameMapper": {
@@ -13,9 +13,7 @@
     "^\\$lib(.*)$": "<rootDir>/src/lib$1",
     "^\\$routes(.*)$": "<rootDir>/src/routes$1"
   },
-  "setupFilesAfterEnv": [
-    "@testing-library/jest-dom/extend-expect"
-  ],
+  "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"],
   "coverageThreshold": {
     "global": {
       "branches": 100,

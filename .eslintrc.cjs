@@ -12,8 +12,22 @@ module.exports = {
     es2017: true,
     node: true
   },
+  globals: {
+    gql: true,
+    ga: true,
+    describe: true,
+    it: true,
+    test: true,
+    expect: true,
+    jest: true,
+    beforeEach: true,
+    afterEach: true,
+    jasmine: true,
+    beforeAll: true,
+    afterAll: true
+  },
   rules: {
-    'no-async-promise-executor': 'off', // why?
-    'import/first': 'off' // this doesnt play nice with .svelte files
+    'import/first': 'off', // this doesnt play nice with .svelte files
+    'no-async-promise-executor': 'off'
   }
 }

@@ -3,7 +3,7 @@
  */
 import '@testing-library/jest-dom/extend-expect'
 import { render } from '@testing-library/svelte'
-import index from '$routes/index.svelte'
+import checkout from '$routes/checkout.svelte'
 
 jest.mock('$app/env.js', () => ({
   amp: false,
@@ -26,7 +26,7 @@ jest.mock('svelte', () => {
   })
   const fakeSvelteKitContext = {
     page: writable({
-      path: '/'
+      path: '/checkout'
     }),
     navigating: writable(false)
   }
@@ -38,9 +38,9 @@ jest.mock('svelte', () => {
   return mockedSvelteKit
 })
 
-describe('routes/index.svelte', () => {
+describe('routes/checkout.svelte', () => {
   it('should compile', async () => {
-    const { getByText } = render(index)
-    expect(getByText('Lead magnet')).toBeInTheDocument()
+    const { getByText } = render(checkout)
+    expect(getByText('Checkout')).toBeInTheDocument()
   })
 })
