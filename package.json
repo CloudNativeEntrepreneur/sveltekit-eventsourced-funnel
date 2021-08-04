@@ -33,7 +33,7 @@
     "sourced": "3.0.1",
     "sourced-repo-svelte-local-storage-store": "1.1.5",
     "svelte": "3.41.0",
-    "svelte-jester": "1.7.0",
+    "svelte-jester": "1.8.2",
     "svelte-preprocess": "4.7.4",
     "tailwindcss": "2.2.7",
     "uuid": "8.3.2"
