@@ -11,8 +11,8 @@
     "test:watch": "jest --config jest.json --watch --coverage --verbose"
   },
   "devDependencies": {
-    "@babel/core": "7.14.8",
-    "@babel/preset-env": "7.14.9",
+    "@babel/core": "7.15.0",
+    "@babel/preset-env": "7.15.0",
     "@sveltejs/kit": "next",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/svelte": "3.0.3",
@@ -32,8 +32,8 @@
     "prettier-plugin-svelte": "2.3.1",
     "sourced": "3.0.1",
     "sourced-repo-svelte-local-storage-store": "1.1.5",
-    "svelte": "3.41.0",
-    "svelte-jester": "1.7.0",
+    "svelte": "3.42.1",
+    "svelte-jester": "1.8.2",
     "svelte-preprocess": "4.7.4",
     "tailwindcss": "2.2.7",
     "uuid": "8.3.2"
