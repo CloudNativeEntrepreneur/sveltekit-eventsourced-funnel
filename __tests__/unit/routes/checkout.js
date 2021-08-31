@@ -16,9 +16,10 @@ jest.mock('$app/navigation.js', () => ({
   goto: jest.fn()
 }))
 
-jest.mock('svelte', () => {
+jest.mock('svelte', async () => {
   const { writable } = require('svelte/store')
   const actualSvelte = jest.requireActual('svelte')
+
   const fakeGetContext = jest.fn((name) => {
     if (name === '__svelte__') {
       return fakeSvelteKitContext

@@ -4,7 +4,8 @@
   "modulePaths": ["<rootDir>/src"],
   "moduleDirectories": ["node_modules"],
   "transform": {
-    "^.+\\.svelte$": "svelte-jester"
+    "^.+\\.svelte$": "svelte-jester",
+    "^.+\\.(ts|tsx|js|jsx)$": ["babel-jest"]
   },
   "moduleFileExtensions": ["js", "svelte"],
   "extensionsToTreatAsEsm": [".ts", ".svelte"],
