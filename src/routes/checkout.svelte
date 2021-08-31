@@ -23,12 +23,12 @@
     })
 
     funnel.setCurrentStep(currentStep.url)
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
-  const submit = async () => {
+  const submit = () => {
     funnel.checkout({ creditCard })
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
   onMount(start)

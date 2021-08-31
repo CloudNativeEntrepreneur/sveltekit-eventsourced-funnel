@@ -26,7 +26,7 @@
 
     funnel.setCurrentStep(currentStep.url)
     funnel.complete()
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
   onMount(start)

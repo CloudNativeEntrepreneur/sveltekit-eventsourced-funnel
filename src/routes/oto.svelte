@@ -28,17 +28,17 @@
     })
 
     funnel.setCurrentStep(currentStep.url)
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
-  const yes = async () => {
+  const yes = () => {
     funnel.acceptOTO()
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
-  const no = async () => {
+  const no = () => {
     funnel.declineOTO()
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
   onMount(start)
