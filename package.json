@@ -7,7 +7,7 @@
     "preview": "svelte-kit preview",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
-    "test": "jest --no-cache --config ./jest.json --coverage --verbose",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --no-cache --config ./jest.json --coverage --verbose",
     "test:watch": "jest --config jest.json --watch --coverage --verbose"
   },
   "devDependencies": {
