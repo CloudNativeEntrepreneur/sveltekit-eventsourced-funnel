@@ -28,17 +28,17 @@
     })
 
     funnel.setCurrentStep(currentStep.url)
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
-  const yes = async () => {
+  const yes = () => {
     funnel.acceptUpsell()
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
-  const no = async () => {
+  const no = () => {
     funnel.declineUpsell()
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
   onMount(start)

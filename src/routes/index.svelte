@@ -22,12 +22,12 @@
     })
 
     funnel.setCurrentStep(currentStep.url)
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
-  const submit = async () => {
+  const submit = () => {
     funnel.setEmail(email)
-    await funnelRepository.commit(funnel)
+    funnelRepository.commit(funnel)
   }
 
   onMount(start)
