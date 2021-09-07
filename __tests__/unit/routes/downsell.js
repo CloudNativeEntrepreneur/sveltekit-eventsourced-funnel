@@ -1,46 +1,16 @@
 /**
  * @jest-environment jsdom
  */
-import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/svelte'
-import downsell from '$routes/downsell.svelte'
-
-jest.mock('$app/env.js', () => ({
-  amp: false,
-  browser: true,
-  dev: true,
-  mode: 'test'
-}))
-
-jest.mock('$app/navigation.js', () => ({
-  goto: jest.fn()
-}))
-
-jest.mock('svelte', () => {
-  const { writable } = require('svelte/store')
-  const actualSvelte = jest.requireActual('svelte')
-  const fakeGetContext = jest.fn((name) => {
-    if (name === '__svelte__') {
-      return fakeSvelteKitContext
-    }
-  })
-  const fakeSvelteKitContext = {
-    page: writable({
-      path: '/downsell'
-    }),
-    navigating: writable(false)
-  }
-
-  const mockedSvelteKit = {
-    ...actualSvelte,
-    getContext: fakeGetContext
-  }
-  return mockedSvelteKit
-})
-
-describe('routes/downsell.svelte', () => {
-  it('should compile', async () => {
-    const { getByText } = render(downsell)
-    expect(getByText('Downsell')).toBeInTheDocument()
-  })
-})
+ import '@testing-library/jest-dom/extend-expect'
+ import { render } from '@testing-library/svelte'
+ import TestHarness from '../helpers/TestHarness.svelte'
+ import downsell from '$routes/downsell.svelte'
+ 
+ describe('routes/downsell.svelte', () => {
+ 
+   it.only('should render in test harness', async () => {
+     const { getByText } = render(TestHarness, { Component: downsell })
+     expect(getByText('Downsell')).toBeInTheDocument()
+   })
+ })
+ 

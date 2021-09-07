@@ -5,9 +5,10 @@
   "moduleDirectories": ["node_modules"],
   "transform": {
     "^.+\\.svelte$": "svelte-jester",
-    "^.+\\.(ts|tsx|js|jsx)$": ["esbuild-jest"]
+    "^.+\\.(ts|tsx|js|jsx)$": ["babel-jest"]
   },
   "moduleFileExtensions": ["js", "svelte"],
+  "extensionsToTreatAsEsm": [".ts", ".svelte"],
   "moduleNameMapper": {
     "^\\$app(.*)$": "<rootDir>/.svelte-kit/build/runtime/app$1",
     "^\\$lib(.*)$": "<rootDir>/src/lib$1",
