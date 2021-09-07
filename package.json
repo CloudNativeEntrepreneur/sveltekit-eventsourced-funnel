@@ -7,13 +7,13 @@
     "preview": "svelte-kit preview",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
-    "test": "DEBUG=funnel NODE_OPTIONS=--experimental-vm-modules jest --no-cache --config ./jest.json --coverage --verbose",
-    "test:watch": "jest --config jest.json --watch --coverage --verbose"
+    "test": "DEBUG=funnel NODE_OPTIONS=--experimental-vm-modules jest --no-cache --config ./jest.json --verbose --coverage",
+    "test:watch": "DEBUG=funnel NODE_OPTIONS=--experimental-vm-modules jest --config jest.json --watch --verbose --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "7.15.0",
-    "@sveltejs/kit": "next",
+    "@sveltejs/kit": "1.0.0-next.164",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/svelte": "3.0.3",
     "autoprefixer": "10.3.3",
