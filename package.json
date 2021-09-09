@@ -35,7 +35,7 @@
     "sourced-repo-svelte-local-storage-store": "2.0.1",
     "svelte": "3.42.4",
     "svelte-jester": "2.1.1",
-    "svelte-preprocess": "4.9.2",
+    "svelte-preprocess": "4.9.4",
     "tailwindcss": "2.2.13",
     "uuid": "8.3.2"
   },
