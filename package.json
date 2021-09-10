@@ -36,7 +36,7 @@
     "svelte": "3.42.5",
     "svelte-jester": "2.1.1",
     "svelte-preprocess": "4.9.4",
-    "tailwindcss": "2.2.13",
+    "tailwindcss": "2.2.15",
     "uuid": "8.3.2"
   },
   "type": "module"
