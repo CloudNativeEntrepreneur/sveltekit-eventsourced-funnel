@@ -1,4 +1,4 @@
-import { expect, it, describe, beforeEach, jest } from '@jest/globals'
+import { expect, it, describe } from '@jest/globals'
 import { funnelRepository } from '$lib/repositories/funnelRepository.js'
 
 // const steps defined below tests - looked too messy at the top
