@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.15.8",
-    "@sveltejs/kit": "1.0.0-next.183",
+    "@sveltejs/kit": "1.0.0-next.184",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/svelte": "3.0.3",
     "autoprefixer": "10.3.7",
