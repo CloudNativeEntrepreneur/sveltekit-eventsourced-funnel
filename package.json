@@ -11,7 +11,7 @@
     "test:watch": "DEBUG=funnel NODE_OPTIONS=--experimental-vm-modules jest --config jest.json --watch --verbose --coverage"
   },
   "devDependencies": {
-    "@babel/core": "7.15.8",
+    "@babel/core": "7.16.0",
     "@sveltejs/kit": "1.0.0-next.192",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/svelte": "3.0.3",
