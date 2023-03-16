@@ -33,7 +33,7 @@
     "prettier-plugin-svelte": "2.5.1",
     "sourced": "4.0.4",
     "sourced-repo-svelte-local-storage-store": "2.0.5",
-    "svelte": "3.44.3",
+    "svelte": "3.57.0",
     "svelte-jester": "2.1.5",
     "svelte-preprocess": "4.10.1",
     "tailwindcss": "2.2.19",
