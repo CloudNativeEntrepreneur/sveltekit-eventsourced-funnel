@@ -21,7 +21,7 @@
     "cssnano": "5.0.14",
     "debug": "4.3.3",
     "esbuild-jest": "0.5.0",
-    "eslint": "7.32.0",
+    "eslint": "8.57.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-svelte3": "3.2.1",
