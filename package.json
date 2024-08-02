@@ -15,7 +15,7 @@
     "@sveltejs/kit": "1.0.0-next.202",
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/svelte": "3.0.3",
-    "autoprefixer": "10.4.0",
+    "autoprefixer": "10.4.20",
     "babel-jest": "27.4.5",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "cssnano": "5.0.14",
